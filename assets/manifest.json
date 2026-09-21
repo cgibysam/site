@@ -1,0 +1,23 @@
+{
+  "images": [
+    {"name": "hero", "kind": "photo", "width": 1920, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_075212_346b43c7-7c06-4760-a159-594fc258d488.png"},
+    {"name": "smash", "kind": "photo", "width": 1920, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_075212_86841d1f-5cd1-4672-815b-1880d3640952.png"},
+    {"name": "cheese", "kind": "photo", "width": 1920, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_075212_e314c025-946a-4913-a469-f9ba290065bd.png"},
+    {"name": "exploded", "kind": "layers", "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_075212_36871b83-4dce-48ca-b4df-1b1e38aff9ab.png"},
+    {"name": "burger", "kind": "cutout", "width": 1400, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_075213_0ae5b808-0ef5-4836-8ca5-5877b468d733.png"},
+    {"name": "menu-patty", "kind": "photo", "width": 900, "quality": 80, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_075212_94ad668a-1b63-470a-affd-e54a0b7f0465.png"},
+    {"name": "menu-single", "kind": "photo", "width": 900, "quality": 80, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_075212_7012d22a-511f-4ef3-ac09-037b4da8eecc.png"},
+    {"name": "menu-truffle", "kind": "photo", "width": 900, "quality": 80, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_075212_f2d37905-5ded-467a-8d32-e4eb50d117a2.png"},
+    {"name": "menu-bacon", "kind": "photo", "width": 900, "quality": 80, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_075212_f522e9e8-fef0-4b3c-b468-c63163c6835f.png"},
+    {"name": "menu-firebird", "kind": "photo", "width": 900, "quality": 80, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_075212_83423d50-bfe3-4920-ba67-70ffb2e38e29.png"},
+    {"name": "menu-fries", "kind": "photo", "width": 900, "quality": 80, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_075212_ebed2bcf-21b7-4e2e-bed3-9ee63953a277.png"},
+    {"name": "menu-shake", "kind": "photo", "width": 900, "quality": 80, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_075213_0cacb33c-28e8-4d5b-b78c-5e23e540dcb5.png"},
+    {"name": "kitchen", "kind": "photo", "width": 2400, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_075217_d055d200-b593-4b32-8fab-fc53b45ef894.png"},
+    {"name": "storefront", "kind": "photo", "width": 2400, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_075217_9ef99dde-d8c4-4118-af30-ce9f1f4db9ed.png"}
+  ],
+  "videos": [
+    {"name": "hero", "pingpong": true, "width": 1280, "crf": 27, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_075336_ddb7347e-a37f-4795-b932-c9e3653d1d1b.mp4"},
+    {"name": "kitchen", "width": 1280, "crf": 28, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_075319_e61cf4f6-588b-4fa7-9bc2-f28fe5a1fdbd.mp4"},
+    {"name": "smash", "width": 1280, "crf": 28, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_075336_f2df186a-1551-4c82-bd0e-54eb5d4d94bc.mp4"}
+  ]
+}
