@@ -70,6 +70,23 @@
   var hero = $('#hero');
   ScrollTrigger.create({ trigger: hero, start: 'bottom 80px', end: 'max', toggleClass: { targets: '#nav', className: 'is-solid' } });
 
+  /* Split headings into words (skips the drop) so they can build in */
+  var splitWords = function (el) {
+    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    var nodes = [];
+    while (walker.nextNode()) { if (walker.currentNode.nodeValue.trim() && !walker.currentNode.parentNode.closest('.drop')) nodes.push(walker.currentNode); }
+    nodes.forEach(function (n) {
+      var frag = document.createDocumentFragment();
+      n.nodeValue.split(/(\s+)/).forEach(function (part) {
+        if (!part) return;
+        if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+        var w = document.createElement('span'); w.className = 'w'; w.textContent = part; frag.appendChild(w);
+      });
+      n.parentNode.replaceChild(frag, n);
+    });
+    return $$('.w', el);
+  };
+
   /* Hero: the period is a drop that falls onto the line under the hero; the line fills to the left and becomes the rail */
   var drop = $('#drop'), landing = $('#landing'), landingFill = $('#landingFill'), railEl = $('#rail');
   var placeRail = function () { if (railEl && landing) railEl.style.top = (landing.getBoundingClientRect().top + window.scrollY) + 'px'; };
@@ -78,7 +95,9 @@
     var fallDistance = function () { return landing.getBoundingClientRect().top - drop.getBoundingClientRect().bottom + 1; };
     var setFillOrigin = function () { var d = drop.getBoundingClientRect(); landingFill.style.width = (d.left + d.width / 2) + 'px'; };
     if (!reduce) {
-      gsap.from($$('.hero__inner > *'), { y: 30, duration: 1, ease: 'power3.out', stagger: 0.08, delay: 0.1 });
+      var heroWords = splitWords($('.hero__title'));
+      gsap.from(heroWords, { yPercent: 60, filter: 'blur(10px)', duration: 1.1, ease: 'expo.out', stagger: 0.07, delay: 0.15, clearProps: 'filter' });
+      gsap.from($$('.hero__inner > :not(.hero__title)'), { y: 24, filter: 'blur(6px)', duration: 1, ease: 'power3.out', stagger: 0.1, delay: 0.35, clearProps: 'filter' });
       setFillOrigin();
       gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: 0.5, invalidateOnRefresh: true, onRefresh: function () { setFillOrigin(); placeRail(); } } })
         .to(drop, { y: function () { return fallDistance(); }, scaleY: 1.25, ease: 'power1.in', duration: 0.62 }, 0)
@@ -118,6 +137,34 @@
     ScrollTrigger.create({ onUpdate: updateRail, onRefresh: function () { placeRail(); placeMarks(); updateRail(); } });
     window.addEventListener('resize', function () { placeRail(); placeMarks(); updateRail(); });
     window.addEventListener('load', function () { placeRail(); placeMarks(); updateRail(); });
+  }
+
+  /* Section headings build in word by word as they arrive */
+  if (!reduce) {
+    $$('main h2, .shop h2').forEach(function (h) {
+      var words = splitWords(h);
+      gsap.from(words, { yPercent: 40, filter: 'blur(8px)', duration: .9, ease: 'expo.out', stagger: 0.05, clearProps: 'filter',
+        scrollTrigger: { trigger: h, start: 'top 92%', once: true } });
+    });
+  }
+
+  /* Magnetic pull on the two big calls to action, pointer devices only */
+  if (!reduce && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    $$('.btn--big, .door').forEach(function (el) {
+      var toX = gsap.quickTo(el, 'x', { duration: .5, ease: 'power3.out' }), toY = gsap.quickTo(el, 'y', { duration: .5, ease: 'power3.out' });
+      el.addEventListener('mousemove', function (e) {
+        var r = el.getBoundingClientRect();
+        toX((e.clientX - (r.left + r.width / 2)) * 0.18); toY((e.clientY - (r.top + r.height / 2)) * 0.28);
+      });
+      el.addEventListener('mouseleave', function () { toX(0); toY(0); });
+    });
+    /* Tile spotlight follows the cursor */
+    $$('.tile').forEach(function (tile) {
+      tile.addEventListener('mousemove', function (e) {
+        var r = tile.getBoundingClientRect();
+        tile.style.setProperty('--mx', (e.clientX - r.left) + 'px'); tile.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
   }
 
   /* Transform-only reveals: nothing waits invisible */
