@@ -1,20 +1,84 @@
 {
   "images": [
-    {"name": "bottle", "kind": "cutout", "width": 1400, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092632_b38acbb1-876e-409c-9909-3e26e681df8e.png"},
-    {"name": "range-engine", "kind": "cutout", "width": 900, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092634_abf14032-9efe-470d-a3d3-49f01e95c156.png"},
-    {"name": "range-generator", "kind": "cutout", "width": 900, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092632_1f948bd3-1774-42b9-9377-22b91c63b391.png"},
-    {"name": "range-industrial", "kind": "cutout", "width": 900, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092634_c6858789-73d5-4da2-8b15-969f58fd545a.png"},
-    {"name": "range-filters", "kind": "cutout", "width": 900, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092633_77a37529-27a1-4331-a522-918a9af7f0ac.png"},
-    {"name": "range-parts", "kind": "cutout", "width": 900, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092633_26f01594-0808-47ec-8f06-27054fc11922.png"},
-    {"name": "range-care", "kind": "cutout", "width": 900, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092632_c944738a-6762-4635-af38-dc8051c0549a.png"},
-    {"name": "plant", "kind": "photo", "width": 2000, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092633_39ade96b-5ffd-427e-80f7-016f8b181b75.png"},
-    {"name": "rooftop", "kind": "photo", "width": 2400, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092633_4c402cc8-1270-4bb9-b853-8f9ccd6af7f6.png"},
-    {"name": "archive-1989", "kind": "photo", "width": 1600, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092633_c13c1995-f7d1-4b05-abf0-360a3a91f3f8.png"},
-    {"name": "pour", "kind": "photo", "width": 1920, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092632_e031e47f-65d2-49a7-8e3e-32370d626dfa.png"},
-    {"name": "mechanic", "kind": "photo", "width": 1400, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092632_878d495f-5a3d-41f4-bc23-15d51c4b9945.png"}
+    {
+      "name": "range-engine",
+      "kind": "cutout",
+      "width": 900,
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092634_abf14032-9efe-470d-a3d3-49f01e95c156.png"
+    },
+    {
+      "name": "range-generator",
+      "kind": "cutout",
+      "width": 900,
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092632_1f948bd3-1774-42b9-9377-22b91c63b391.png"
+    },
+    {
+      "name": "range-industrial",
+      "kind": "cutout",
+      "width": 900,
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092634_c6858789-73d5-4da2-8b15-969f58fd545a.png"
+    },
+    {
+      "name": "range-filters",
+      "kind": "cutout",
+      "width": 900,
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092633_77a37529-27a1-4331-a522-918a9af7f0ac.png"
+    },
+    {
+      "name": "range-parts",
+      "kind": "cutout",
+      "width": 900,
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092633_26f01594-0808-47ec-8f06-27054fc11922.png"
+    },
+    {
+      "name": "range-care",
+      "kind": "cutout",
+      "width": 900,
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092632_c944738a-6762-4635-af38-dc8051c0549a.png"
+    },
+    {
+      "name": "plant",
+      "kind": "photo",
+      "width": 2000,
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092633_39ade96b-5ffd-427e-80f7-016f8b181b75.png"
+    },
+    {
+      "name": "rooftop",
+      "kind": "photo",
+      "width": 2400,
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092633_4c402cc8-1270-4bb9-b853-8f9ccd6af7f6.png"
+    },
+    {
+      "name": "archive-1989",
+      "kind": "photo",
+      "width": 1600,
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092633_c13c1995-f7d1-4b05-abf0-360a3a91f3f8.png"
+    },
+    {
+      "name": "pour",
+      "kind": "photo",
+      "width": 1920,
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092632_e031e47f-65d2-49a7-8e3e-32370d626dfa.png"
+    },
+    {
+      "name": "mechanic",
+      "kind": "photo",
+      "width": 1400,
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_092632_878d495f-5a3d-41f4-bc23-15d51c4b9945.png"
+    }
   ],
   "videos": [
-    {"name": "pour", "width": 1280, "crf": 27, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_093327_68b06e3c-3e90-4189-91f0-30fcc9652650.mp4"},
-    {"name": "rooftop", "width": 1280, "crf": 27, "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_093327_324974fb-cb2e-47b4-8955-e34c9b1da79b.mp4"}
+    {
+      "name": "pour",
+      "width": 1280,
+      "crf": 27,
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_093327_68b06e3c-3e90-4189-91f0-30fcc9652650.mp4"
+    },
+    {
+      "name": "rooftop",
+      "width": 1280,
+      "crf": 27,
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JP9qYU76V0Yz8vMcqLAygRUmRk/hf_20260921_093327_324974fb-cb2e-47b4-8955-e34c9b1da79b.mp4"
+    }
   ]
 }

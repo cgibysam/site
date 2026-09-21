@@ -69,36 +69,30 @@
   /* Nav */
   ScrollTrigger.create({ start: 40, end: 'max', toggleClass: { targets: '#nav', className: 'is-solid' } });
 
-  /* Hero: the bottle tilts and pours into the rail as the hero scrolls away */
-  var hero = $('#hero'), bottle = $('#bottle'), pour = $('#pour'), pourPath = $('#pourPath');
-  var railX = function () { return parseFloat(getComputedStyle($('#rail')).left) + 1.5; };
-  var drawPour = function () {
-    if (!hero || !bottle || !pourPath) return 0;
-    var hr = hero.getBoundingClientRect(), br = bottle.getBoundingClientRect();
-    var h = br.height, cx = br.left - hr.left + br.width / 2, top = br.top - hr.top;
-    // Neck position once the bottle has tilted -28deg around its base
-    var nx = cx - 0.36 * h, ny = top + 0.17 * h;
-    var ex = railX(), ey = hr.height;
-    var d = 'M' + nx.toFixed(1) + ' ' + ny.toFixed(1) +
-      ' C' + (nx - 0.15 * h).toFixed(1) + ' ' + (ny + 0.55 * h).toFixed(1) + ' ' + (ex + 60).toFixed(1) + ' ' + (ey - 220).toFixed(1) + ' ' + ex.toFixed(1) + ' ' + ey.toFixed(1);
-    pourPath.setAttribute('d', d);
-    var len = pourPath.getTotalLength();
-    pourPath.style.strokeDasharray = len;
-    return len;
-  };
-  if (hero && bottle) {
+  /* Hero: the period is a drop that falls onto the line under the hero; the line fills to the left and becomes the rail */
+  var hero = $('#hero'), drop = $('#drop'), specs = $('#specs'), specsFill = $('#specsFill'), railEl = $('#rail');
+  var placeRail = function () { if (railEl && specs) railEl.style.top = (specs.getBoundingClientRect().top + window.scrollY) + 'px'; };
+  placeRail();
+  if (hero && drop && specs && specsFill) {
+    var fallDistance = function () {
+      var d = drop.getBoundingClientRect(), s = specs.getBoundingClientRect();
+      return s.top - d.bottom + 1;
+    };
+    var setFillOrigin = function () {
+      var d = drop.getBoundingClientRect();
+      var x = d.left + d.width / 2;
+      specsFill.style.width = x + 'px';
+    };
     if (!reduce) {
-      gsap.from(bottle, { y: 60, rotation: 6, duration: 1.4, ease: 'expo.out' });
-      gsap.from($$('.hero__copy > *'), { y: 30, duration: 1, ease: 'power3.out', stagger: 0.08, delay: 0.1 });
-      var pourLen = drawPour();
-      var heroTl = gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom 30%', scrub: 0.6, invalidateOnRefresh: true, onRefresh: function () { pourLen = drawPour(); pourPath.style.strokeDashoffset = pourLen; } } });
-      pourPath.style.strokeDashoffset = pourLen;
-      heroTl.to(bottle, { rotation: -28, y: 40, ease: 'none' }, 0)
-        .to('.hero__copy', { y: -60, ease: 'none' }, 0)
-        .to(pourPath, { strokeDashoffset: 0, ease: 'none', duration: 0.7 }, 0.2)
-        .to('.hero__tag', { y: 20, ease: 'none' }, 0);
-    } else if (pour) {
-      pour.style.display = 'none';
+      gsap.from($$('.hero__inner > *'), { y: 30, duration: 1, ease: 'power3.out', stagger: 0.08, delay: 0.1 });
+      setFillOrigin();
+      gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: 0.5, invalidateOnRefresh: true, onRefresh: function () { setFillOrigin(); placeRail(); } } })
+        .to(drop, { y: function () { return fallDistance(); }, scaleY: 1.25, ease: 'power1.in', duration: 0.62 }, 0)
+        .to(drop, { scaleY: 1, duration: 0.08 }, 0.62)
+        .to(specsFill, { scaleX: 1, ease: 'none', duration: 0.38 }, 0.62)
+        .to('.hero__inner', { y: -40, ease: 'none', duration: 1 }, 0);
+    } else {
+      specsFill.style.transform = 'scaleX(1)';
     }
   }
 
@@ -131,8 +125,8 @@
     placeMarks();
     updateRail();
     ScrollTrigger.create({ onUpdate: updateRail, onRefresh: function () { placeMarks(); updateRail(); } });
-    window.addEventListener('resize', function () { placeMarks(); updateRail(); });
-    window.addEventListener('load', function () { placeMarks(); updateRail(); });
+    window.addEventListener('resize', function () { placeRail(); placeMarks(); updateRail(); });
+    window.addEventListener('load', function () { placeRail(); placeMarks(); updateRail(); });
   }
 
   /* Transform-only reveals: nothing waits invisible */
