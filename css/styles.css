@@ -140,7 +140,7 @@ main > :not(.hero), .footer { position: relative; z-index: 2; background: var(--
 .build__captions li { position: absolute; inset: 0; opacity: 0; text-align: center; }
 
 /* Menu */
-.menu { padding-top: clamp(72px, 10vh, 140px); }
+.menu { padding-top: clamp(72px, 10vh, 140px); overflow: hidden; }
 .menu__pin { padding: 0 var(--gutter) clamp(72px, 10vh, 140px); }
 .menu__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; max-width: var(--max); margin: 0 auto clamp(32px, 5vh, 64px); }
 .menu__head > div { display: grid; gap: 1rem; }

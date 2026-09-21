@@ -136,7 +136,7 @@
       return img;
     });
     var size = function () {
-      var h = Math.min(window.innerHeight * 0.62, window.innerWidth * 0.92 * H / W);
+      var h = Math.min(window.innerHeight * 0.66, window.innerWidth * 0.92 * H / W);
       stack.style.height = h + 'px';
       stack.style.width = (h * W / H) + 'px';
     };
