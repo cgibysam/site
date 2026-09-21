@@ -23,7 +23,6 @@
   </a>
   <nav class="nav__links" aria-label="Sections">
     <a href="#range">Range</a>
-    <a href="#process">Process</a>
     <a href="#story">Story</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -40,60 +39,50 @@
   <div class="rail" id="rail" aria-hidden="true"><div class="rail__fill"></div></div>
 
   <section class="hero" id="hero">
+    <div class="hero__media"><video autoplay muted loop playsinline preload="auto" poster="assets/img/pour.webp"><source src="assets/video/pour.mp4" type="video/mp4"></video></div>
+    <div class="hero__shade" aria-hidden="true"></div>
     <div class="hero__inner">
       <p class="eyebrow">Lubricants · Filters · Parts · Care <span>Lebanon, since 1989</span></p>
       <h1 class="hero__title">Energy<br>you can <em>pour<span class="drop" id="drop" aria-hidden="true"><i></i></span></em></h1>
-      <p class="hero__lede">INER-G blends, fills and delivers the oils that keep Lebanon's cars, trucks and rooftop generators running. Same day in Beirut, 48 hours anywhere in the country.</p>
+      <p class="hero__lede">The oils that keep Lebanon's cars, trucks and rooftop generators running. Blended in Chekka, delivered the same day in Beirut.</p>
       <div class="hero__actions">
         <a class="btn btn--shop btn--big" href="shop.html">Enter the shop <span aria-hidden="true">→</span></a>
-        <a class="btn btn--line" href="#range">See the range</a>
+        <a class="btn btn--ghost" href="#range">See the range</a>
       </div>
-      <dl class="hero__facts">
-        <div><dt>Distributors</dt><dd>210</dd></div>
-        <div><dt>Litres a year</dt><dd>18 M</dd></div>
-        <div><dt>Export markets</dt><dd>14</dd></div>
-      </dl>
     </div>
     <p class="hero__cue" aria-hidden="true">Scroll</p>
   </section>
-
-  <section class="specs" id="specs" aria-label="Certifications and capacity">
-    <div class="specs__line" aria-hidden="true"><div class="specs__fill" id="specsFill"></div></div>
-    <ul>
-      <li>API SP</li><li>ACEA A3/B4</li><li>API CI-4</li><li>ISO 9001:2015</li><li>ISO VG 32 · 46 · 68</li><li>Blended in Chekka</li><li>6 filling lines</li><li>26 trucks</li>
-    </ul>
-  </section>
+  <div class="landing" id="landing" aria-hidden="true"><div class="landing__fill" id="landingFill"></div></div>
 
   <section class="range" id="range" data-rail="Range">
     <header class="head" data-reveal="children">
       <p class="eyebrow">01 <span>The range</span></p>
       <h2>Six shelves. <em>One</em> label.</h2>
-      <p class="head__lede">Everything a workshop, a fleet yard or a generator room orders in a month, blended or sourced by us and shipped from one warehouse.</p>
     </header>
     <ul class="tiles" data-reveal="children">
       <li class="tile">
         <figure class="tile__media"><img src="assets/img/range-engine.webp" alt="INER-G engine oil bottles in 1, 4 and 5 litre sizes" loading="lazy"></figure>
-        <div class="tile__body"><h3>Engine oils</h3><p>Full synthetic to mineral, 0W-20 to 20W-50. Passenger, taxi service, pickup and diesel.</p><p class="tile__spec">API SP · ACEA A3/B4</p></div>
+        <div class="tile__body"><h3>Engine oils</h3><p>Full synthetic to mineral, 0W-20 to 20W-50.</p><p class="tile__spec">API SP · ACEA A3/B4</p></div>
         <a class="tile__link" href="shop.html#engine-oils">Shop engine oils <span aria-hidden="true">→</span></a>
       </li>
       <li class="tile">
         <figure class="tile__media"><img src="assets/img/range-generator.webp" alt="INER-G GENSET 15W-40 drum and pail" loading="lazy"></figure>
-        <div class="tile__body"><h3>Generator oils</h3><p>GENSET 15W-40, the oil half of Beirut's rooftops run on. Long-drain diesel formulas for standby and prime power.</p><p class="tile__spec">API CI-4 · 500 h drain</p></div>
+        <div class="tile__body"><h3>Generator oils</h3><p>GENSET 15W-40, the oil half of Beirut's rooftops run on.</p><p class="tile__spec">API CI-4 · 500 h drain</p></div>
         <a class="tile__link" href="shop.html#generator-oils">Shop generator oils <span aria-hidden="true">→</span></a>
       </li>
       <li class="tile">
         <figure class="tile__media"><img src="assets/img/range-industrial.webp" alt="INER-G hydraulic oil pail and gear oil bottle" loading="lazy"></figure>
-        <div class="tile__body"><h3>Industrial &amp; hydraulic</h3><p>Hydraulic, gear, compressor and marine oils for plants, presses and boats.</p><p class="tile__spec">ISO VG 32 · 46 · 68</p></div>
+        <div class="tile__body"><h3>Industrial &amp; hydraulic</h3><p>Hydraulic, gear, compressor and marine oils.</p><p class="tile__spec">ISO VG 32 · 46 · 68</p></div>
         <a class="tile__link" href="shop.html#industrial">Shop industrial <span aria-hidden="true">→</span></a>
       </li>
       <li class="tile">
         <figure class="tile__media"><img src="assets/img/range-filters.webp" alt="Oil, air and fuel filters" loading="lazy"></figure>
-        <div class="tile__body"><h3>Filters</h3><p>Oil, air, fuel and cabin filters for 1,800 vehicle references, OE-equivalent.</p><p class="tile__spec">1,800 references</p></div>
+        <div class="tile__body"><h3>Filters</h3><p>Oil, air, fuel and cabin filters, OE-equivalent.</p><p class="tile__spec">1,800 references</p></div>
         <a class="tile__link" href="shop.html#filters">Shop filters <span aria-hidden="true">→</span></a>
       </li>
       <li class="tile">
         <figure class="tile__media"><img src="assets/img/range-parts.webp" alt="Serpentine belt, spark plugs, brake pads and a coolant hose" loading="lazy"></figure>
-        <div class="tile__body"><h3>Parts</h3><p>Belts, plugs, pads, hoses and batteries for the models Lebanon actually drives.</p><p class="tile__spec">Same day in Beirut</p></div>
+        <div class="tile__body"><h3>Parts</h3><p>Belts, plugs, pads, hoses and batteries.</p><p class="tile__spec">Same day in Beirut</p></div>
         <a class="tile__link" href="shop.html#parts">Shop parts <span aria-hidden="true">→</span></a>
       </li>
       <li class="tile">
@@ -104,19 +93,17 @@
     </ul>
   </section>
 
-  <section class="process" id="process" data-rail="Process">
-    <header class="head" data-reveal="children">
-      <p class="eyebrow">02 <span>From barrel to bottle</span></p>
-      <h2>Four stops between <em>the ship</em> and your engine.</h2>
-    </header>
-    <div class="steps" id="steps">
-      <div class="steps__track" aria-hidden="true"><div class="steps__fill" id="stepsFill"></div><div class="steps__drop" id="stepsDrop"></div></div>
-      <ol class="steps__list" data-reveal="children">
-        <li class="step"><p class="step__num">01</p><h3>Base oil lands in Chekka</h3><p>Group II and III base stocks arrive by ship and rest in heated tanks beside the plant.</p><p class="step__stat"><b data-count="14">0</b><small>storage tanks</small></p></li>
-        <li class="step"><p class="step__num">02</p><h3>Blended by weight</h3><p>Additive packages are dosed into 12,000-litre batches, and every batch goes through the lab before release.</p><p class="step__stat"><b data-count="12000">0</b><small>litres per batch</small></p></li>
-        <li class="step"><p class="step__num">03</p><h3>Filled on six lines</h3><p>From 1-litre bottles to 208-litre drums: capped, sealed and printed with the batch code.</p><p class="step__stat"><b data-count="6">0</b><small>filling lines</small></p></li>
-        <li class="step"><p class="step__num">04</p><h3>On a truck by morning</h3><p>Twenty-six trucks cover Beirut the same day and the rest of the country within 48 hours.</p><p class="step__stat"><b data-count="26">0</b><small>trucks on the road</small></p></li>
-      </ol>
+  <section class="story" id="story" data-rail="Story">
+    <figure class="story__media"><img src="assets/img/archive-1989.webp" alt="A green delivery truck loaded with oil drums at a port warehouse, 1989" loading="lazy"></figure>
+    <div class="story__copy" data-reveal="children">
+      <p class="eyebrow">02 <span>Since 1989</span></p>
+      <h2>Two trucks, one product, <em>no grid.</em></h2>
+      <p class="story__lede">Georges Karam started delivering generator oil from a rented yard on the Dora highway, during the power cuts that never quite ended. Thirty-seven years later the oil is our own blend, the plant is ours, and the trucks still leave Dora before sunrise.</p>
+      <dl class="dates">
+        <div><dt>1989</dt><dd>Two trucks and a rented yard in Dora, Beirut.</dd></div>
+        <div><dt>2004</dt><dd>Our blending and filling plant opens beside the port in Chekka.</dd></div>
+        <div><dt>2026</dt><dd>The shop goes online. Same trucks, same drivers, fewer phone calls.</dd></div>
+      </dl>
     </div>
   </section>
 
@@ -126,81 +113,19 @@
     <div class="power__inner" data-reveal="children">
       <p class="eyebrow">03 <span>The rooftop economy</span></p>
       <h2>Lebanon runs on generators.<br>Generators run on <em>INER-G.</em></h2>
-      <p class="power__lede">When the grid drops, the rooftops start. GENSET 15W-40 was blended for exactly that: long hours, hot exhausts, dusty air and drain intervals that don't need a technician every fortnight.</p>
       <dl class="stats">
         <div><dt>Generator sets on GENSET</dt><dd><b data-count="3400">0</b></dd></div>
         <div><dt>Hours between drains</dt><dd><b data-count="500">0</b></dd></div>
-        <div><dt>Rooftop deliveries a week</dt><dd><b data-count="640">0</b></dd></div>
+        <div><dt>Distributors</dt><dd><b data-count="210">0</b></dd></div>
       </dl>
     </div>
   </section>
 
-  <section class="story" id="story" data-rail="Story">
-    <div class="story__year">
-      <p class="eyebrow">04 <span>The story</span></p>
-      <p class="story__big" id="storyYear">1989</p>
-      <p class="story__caption" id="storyCaption">Two trucks, one product, no grid.</p>
-    </div>
-    <ol class="story__list" id="storyList">
-      <li class="mile" data-year="1989" data-caption="Two trucks, one product, no grid.">
-        <figure class="mile__media"><img src="assets/img/archive-1989.webp" alt="A green delivery truck loaded with oil drums at a port warehouse, 1989" loading="lazy"></figure>
-        <h3>Two trucks in Dora</h3>
-        <p>Georges Karam starts delivering generator oil from a rented yard on the Dora highway, during the power cuts that never quite ended. Two trucks, one supplier, cash on delivery.</p>
-      </li>
-      <li class="mile" data-year="1996" data-caption="The first blend with our name on it.">
-        <h3>The first INER-G blend</h3>
-        <p>Tired of imported oil that was never made for a 40 °C rooftop, the company blends GENSET 15W-40 with a partner in Cyprus. Within two years it is the brand.</p>
-      </li>
-      <li class="mile" data-year="2004" data-caption="Fourteen tanks and one strict chemist.">
-        <figure class="mile__media"><img src="assets/img/plant.webp" alt="Stainless blending tanks and a filling line inside the Chekka plant" loading="lazy"></figure>
-        <h3>Our own plant in Chekka</h3>
-        <p>A blending and filling plant opens beside the port in Chekka: fourteen tanks, two lines and a laboratory run by one very strict chemist.</p>
-      </li>
-      <li class="mile" data-year="2011" data-caption="First pallets across the border.">
-        <h3>Across the border</h3>
-        <p>First export pallets leave for Jordan and Iraq. Today INER-G ships to fourteen countries, most of them places with hot summers and long generator hours.</p>
-      </li>
-      <li class="mile" data-year="2020" data-caption="Three shifts, four new lines, zero missed rooftops.">
-        <h3>The year the grid failed</h3>
-        <p>Demand for generator oil triples in one summer. The plant runs three shifts, adds four filling lines and never misses a rooftop delivery.</p>
-      </li>
-      <li class="mile" data-year="2026" data-caption="Same trucks, same drivers, fewer phone calls.">
-        <h3>The shop goes online</h3>
-        <p>Every product, every spec sheet and every filter reference, orderable from a phone. Same trucks, same drivers, fewer phone calls.</p>
-        <a class="btn btn--shop" href="shop.html">Enter the shop <span aria-hidden="true">→</span></a>
-      </li>
-    </ol>
-  </section>
-
-  <section class="lab" id="lab" data-rail="Quality">
-    <figure class="lab__media"><img src="assets/img/mechanic.webp" alt="A mechanic pouring INER-G oil into an engine" loading="lazy"></figure>
-    <div class="lab__inner" data-reveal="children">
-      <p class="eyebrow">05 <span>Quality</span></p>
-      <h2>Every batch leaves with a <em>lab sheet.</em></h2>
-      <p class="lab__lede">Viscosity, base number, flash point and pour point, measured per batch and printed on the drum. Ask any distributor for the sheet behind the code on your bottle.</p>
-      <table class="sheet">
-        <caption>Batch 26-0917 · GENSET 15W-40</caption>
-        <tbody>
-          <tr><th scope="row">Viscosity at 100 °C</th><td>14.8 cSt</td></tr>
-          <tr><th scope="row">Viscosity index</th><td>138</td></tr>
-          <tr><th scope="row">Total base number</th><td>10.2 mg KOH/g</td></tr>
-          <tr><th scope="row">Flash point</th><td>228 °C</td></tr>
-          <tr><th scope="row">Pour point</th><td>−30 °C</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
   <section class="shop" id="shop" data-rail="Shop">
-    <div class="shop__media"><video muted loop playsinline preload="none" poster="assets/img/pour.webp" data-lazy><source src="assets/video/pour.mp4" type="video/mp4"></video></div>
-    <div class="shop__shade" aria-hidden="true"></div>
     <div class="shop__panel" data-reveal="children">
-      <p class="eyebrow">06 <span>The shop</span></p>
+      <p class="eyebrow">04 <span>The shop</span></p>
       <h2>Order it the way you'd pour it. <em>Straight.</em></h2>
       <p class="shop__lede">Every product in one place, with the spec sheet next to the price. Pay on delivery or by card. Same day in Beirut.</p>
-      <ul class="shop__chips" aria-label="Shop categories">
-        <li>Engine oils</li><li>Generator oils</li><li>Industrial</li><li>Filters</li><li>Parts</li><li>Care &amp; fluids</li>
-      </ul>
       <a class="door" href="shop.html"><span class="door__label">Enter the shop</span><span class="door__arrow" aria-hidden="true">→</span></a>
     </div>
   </section>

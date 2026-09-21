@@ -66,33 +66,27 @@
     });
   });
 
-  /* Nav */
-  ScrollTrigger.create({ start: 40, end: 'max', toggleClass: { targets: '#nav', className: 'is-solid' } });
+  /* Nav turns solid once the hero is gone */
+  var hero = $('#hero');
+  ScrollTrigger.create({ trigger: hero, start: 'bottom 80px', end: 'max', toggleClass: { targets: '#nav', className: 'is-solid' } });
 
   /* Hero: the period is a drop that falls onto the line under the hero; the line fills to the left and becomes the rail */
-  var hero = $('#hero'), drop = $('#drop'), specs = $('#specs'), specsFill = $('#specsFill'), railEl = $('#rail');
-  var placeRail = function () { if (railEl && specs) railEl.style.top = (specs.getBoundingClientRect().top + window.scrollY) + 'px'; };
+  var drop = $('#drop'), landing = $('#landing'), landingFill = $('#landingFill'), railEl = $('#rail');
+  var placeRail = function () { if (railEl && landing) railEl.style.top = (landing.getBoundingClientRect().top + window.scrollY) + 'px'; };
   placeRail();
-  if (hero && drop && specs && specsFill) {
-    var fallDistance = function () {
-      var d = drop.getBoundingClientRect(), s = specs.getBoundingClientRect();
-      return s.top - d.bottom + 1;
-    };
-    var setFillOrigin = function () {
-      var d = drop.getBoundingClientRect();
-      var x = d.left + d.width / 2;
-      specsFill.style.width = x + 'px';
-    };
+  if (hero && drop && landing && landingFill) {
+    var fallDistance = function () { return landing.getBoundingClientRect().top - drop.getBoundingClientRect().bottom + 1; };
+    var setFillOrigin = function () { var d = drop.getBoundingClientRect(); landingFill.style.width = (d.left + d.width / 2) + 'px'; };
     if (!reduce) {
       gsap.from($$('.hero__inner > *'), { y: 30, duration: 1, ease: 'power3.out', stagger: 0.08, delay: 0.1 });
       setFillOrigin();
       gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: 0.5, invalidateOnRefresh: true, onRefresh: function () { setFillOrigin(); placeRail(); } } })
         .to(drop, { y: function () { return fallDistance(); }, scaleY: 1.25, ease: 'power1.in', duration: 0.62 }, 0)
         .to(drop, { scaleY: 1, duration: 0.08 }, 0.62)
-        .to(specsFill, { scaleX: 1, ease: 'none', duration: 0.38 }, 0.62)
-        .to('.hero__inner', { y: -40, ease: 'none', duration: 1 }, 0);
+        .to(landingFill, { scaleX: 1, ease: 'none', duration: 0.38 }, 0.62)
+        .to('.hero__media', { yPercent: 12, ease: 'none', duration: 1 }, 0);
     } else {
-      specsFill.style.transform = 'scaleX(1)';
+      landingFill.style.transform = 'scaleX(1)';
     }
   }
 
@@ -109,10 +103,7 @@
     });
     var placeMarks = function () {
       var railTop = rail.getBoundingClientRect().top + window.scrollY;
-      marks.forEach(function (m) {
-        var top = m.sec.getBoundingClientRect().top + window.scrollY - railTop + 8;
-        m.el.style.top = top + 'px';
-      });
+      marks.forEach(function (m) { m.el.style.top = (m.sec.getBoundingClientRect().top + window.scrollY - railTop + 8) + 'px'; });
     };
     var updateRail = function () {
       var r = rail.getBoundingClientRect();
@@ -124,7 +115,7 @@
     };
     placeMarks();
     updateRail();
-    ScrollTrigger.create({ onUpdate: updateRail, onRefresh: function () { placeMarks(); updateRail(); } });
+    ScrollTrigger.create({ onUpdate: updateRail, onRefresh: function () { placeRail(); placeMarks(); updateRail(); } });
     window.addEventListener('resize', function () { placeRail(); placeMarks(); updateRail(); });
     window.addEventListener('load', function () { placeRail(); placeMarks(); updateRail(); });
   }
@@ -148,44 +139,11 @@
     } });
   });
 
-  /* Process track: the line fills and the drop travels as the steps scroll in */
-  var steps = $('#steps'), stepsFill = $('#stepsFill'), stepsDrop = $('#stepsDrop');
-  if (steps && stepsFill && stepsDrop) {
-    var narrow = window.matchMedia('(max-width: 960px)');
-    var setProgress = function (p) {
-      if (narrow.matches) {
-        stepsFill.style.transform = 'scaleY(' + p + ')';
-        stepsDrop.style.transform = 'translateY(' + (p * steps.getBoundingClientRect().height - 8) + 'px) rotate(-45deg)';
-      } else {
-        stepsFill.style.transform = 'scaleX(' + p + ')';
-        stepsDrop.style.transform = 'translateX(' + (p * steps.getBoundingClientRect().width - 8) + 'px) rotate(-45deg)';
-      }
-    };
-    if (reduce) setProgress(1);
-    else ScrollTrigger.create({ trigger: steps, start: 'top 80%', end: 'bottom 45%', scrub: 0.4, onUpdate: function (self) { setProgress(self.progress); } });
+  /* Rooftop parallax and footer wordmark */
+  if (!reduce) {
+    gsap.fromTo('.power__media', { yPercent: -8 }, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: '#power', start: 'top bottom', end: 'bottom top', scrub: true } });
+    gsap.fromTo('.footer__mark', { yPercent: 30 }, { yPercent: 0, ease: 'none', scrollTrigger: { trigger: '.footer', start: 'top bottom', end: 'bottom bottom', scrub: true } });
   }
-
-  /* Rooftop parallax */
-  if (!reduce) gsap.fromTo('.power__media', { yPercent: -8 }, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: '#power', start: 'top bottom', end: 'bottom top', scrub: true } });
-
-  /* Story: the big year follows the milestone in view */
-  var yearEl = $('#storyYear'), captionEl = $('#storyCaption');
-  if (yearEl) {
-    var shown = { v: 1989 };
-    var setYear = function (li) {
-      var y = parseInt(li.getAttribute('data-year'), 10);
-      if (captionEl) captionEl.textContent = li.getAttribute('data-caption') || '';
-      if (reduce) { yearEl.textContent = y; return; }
-      gsap.to(shown, { v: y, duration: 0.7, ease: 'power2.out', overwrite: true, onUpdate: function () { yearEl.textContent = Math.round(shown.v); } });
-    };
-    $$('.mile').forEach(function (li) {
-      ScrollTrigger.create({ trigger: li, start: 'top 60%', end: 'bottom 60%', onEnter: function () { setYear(li); }, onEnterBack: function () { setYear(li); } });
-      if (!reduce) gsap.from(li, { y: 32, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: li, start: 'top 88%', once: true } });
-    });
-  }
-
-  /* Footer wordmark */
-  if (!reduce) gsap.fromTo('.footer__mark', { yPercent: 30 }, { yPercent: 0, ease: 'none', scrollTrigger: { trigger: '.footer', start: 'top bottom', end: 'bottom bottom', scrub: true } });
 
   window.addEventListener('load', function () { ScrollTrigger.refresh(); });
 })();
