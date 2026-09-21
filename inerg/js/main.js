@@ -186,7 +186,7 @@
     };
     $$('.mile').forEach(function (li) {
       ScrollTrigger.create({ trigger: li, start: 'top 60%', end: 'bottom 60%', onEnter: function () { setYear(li); }, onEnterBack: function () { setYear(li); } });
-      if (!reduce) gsap.from(li, { x: 24, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: li, start: 'top 88%', once: true } });
+      if (!reduce) gsap.from(li, { y: 32, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: li, start: 'top 88%', once: true } });
     });
   }
 
