@@ -33,14 +33,18 @@ def clean_alpha(im: Image.Image, threshold: int = 24) -> Image.Image:
     im.putalpha(alpha)
     return im
 
+import sys
+
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-IMG = ROOT / "assets" / "img"
-VID = ROOT / "assets" / "video"
-TMP = ROOT / ".tmp-assets"
+# Optional argument: the site folder holding assets/manifest.json (default: repo root).
+SITE = (ROOT / sys.argv[1]).resolve() if len(sys.argv) > 1 else ROOT
+IMG = SITE / "assets" / "img"
+VID = SITE / "assets" / "video"
+TMP = ROOT / ".tmp-assets" / SITE.name
 for d in (IMG, VID, TMP):
     d.mkdir(parents=True, exist_ok=True)
 
-manifest = json.loads((ROOT / "assets" / "manifest.json").read_text())
+manifest = json.loads((SITE / "assets" / "manifest.json").read_text())
 
 
 def fetch(url: str, name: str) -> pathlib.Path:
@@ -99,9 +103,13 @@ def slice_layers(im: Image.Image, name: str):
 
 
 for item in manifest.get("images", []):
+    kind = item.get("kind", "photo")
+    done = IMG / ("layers.json" if kind == "layers" else f"{item['name']}.webp")
+    if done.exists():
+        print("skip", done.relative_to(ROOT))
+        continue
     src = fetch(item["url"], item["name"] + ".png")
     im = Image.open(src)
-    kind = item.get("kind", "photo")
     if kind == "photo":
         save_webp(im.convert("RGB"), IMG / f"{item['name']}.webp",
                   item.get("width", 1920), item.get("quality", 82))
@@ -113,8 +121,11 @@ for item in manifest.get("images", []):
         slice_layers(im, item["name"])
 
 for v in manifest.get("videos", []):
-    src = fetch(v["url"], v["name"] + ".mp4")
     out = VID / f"{v['name']}.mp4"
+    if out.exists():
+        print("skip", out.relative_to(ROOT))
+        continue
+    src = fetch(v["url"], v["name"] + ".mp4")
     width = v.get("width", 1280)
     scale = f"scale={width}:-2"
     common = ["-an", "-c:v", "libx264", "-preset", "slow", "-crf", str(v.get("crf", 27)),
