@@ -21,11 +21,19 @@ jobs:
           python-version: "3.12"
       - run: pip install pillow
       - run: ffmpeg -version | head -1
+      - name: Vendor GSAP and Lenis from npm
+        run: |
+          mkdir -p js/vendor /tmp/vendor && cd /tmp/vendor
+          npm pack gsap@3.13.0 lenis@1.3.11 --silent
+          mkdir gsap lenis
+          tar xzf gsap-3.13.0.tgz -C gsap --strip-components=1
+          tar xzf lenis-1.3.11.tgz -C lenis --strip-components=1
+          cp gsap/dist/gsap.min.js gsap/dist/ScrollTrigger.min.js lenis/dist/lenis.min.js "$GITHUB_WORKSPACE/js/vendor/"
       - run: python scripts/fetch_assets.py
       - name: Commit optimized assets
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/img assets/video
-          git commit -m "Add optimized generated assets" || echo "nothing to commit"
+          git add assets/img assets/video js/vendor
+          git commit -m "Add optimized generated assets and vendored libraries" || echo "nothing to commit"
           git push
