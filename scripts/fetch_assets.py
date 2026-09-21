@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Fetch generated media listed in assets/manifest.json and write web-optimized
-derivatives into assets/img and assets/video.
+"""Fetch generated media listed in <site>/assets/manifest.json and write
+web-optimized derivatives into <site>/assets/img and <site>/assets/video.
 
-Runs in GitHub Actions (.github/workflows/assets.yml). Safe to re-run: sources
-are cached in .tmp-assets/ and outputs are overwritten.
+Usage: python scripts/fetch_assets.py patty
+
+Runs in GitHub Actions (.github/workflows/assets.yml) for every site folder.
+Safe to re-run: existing outputs are skipped and sources are cached in .tmp-assets/.
 """
 import json
 import pathlib

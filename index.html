@@ -2,204 +2,31 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Patty Smash Burgers</title>
-<meta name="description" content="Patty makes premium smash burgers downtown: smashed to order, never flipped. Menu, hours and where to find us.">
-<meta name="theme-color" content="#0b0908">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Instrument+Serif:ital@1&family=DM+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="css/styles.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sites</title>
+<meta name="color-scheme" content="light dark">
+<style>
+  :root { --bg: #f4f2ec; --ink: #16181a; --muted: #6a6f6c; --line: #d8d5cc; --card: #ffffff; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #101312; --ink: #eef0ea; --muted: #97a19a; --line: #262c28; --card: #171c19; } }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 56rem; margin: 0 auto; padding: 12vh 24px 15vh; }
+  h1 { font-size: 1.1rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin: 0 0 1.5rem; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+  a { display: block; padding: 1.4rem 1.5rem; background: var(--card); border: 1px solid var(--line); border-radius: 8px; color: inherit; text-decoration: none; transition: transform .2s; }
+  a:hover { transform: translateY(-2px); }
+  b { display: block; font-size: 1.4rem; margin-bottom: .3rem; }
+  span { color: var(--muted); font-size: .92rem; }
+  p { margin: 2rem 0 0; color: var(--muted); font-size: .9rem; }
+</style>
 </head>
 <body>
-<a class="skip" href="#menu">Skip to the menu</a>
-<div class="grain" aria-hidden="true"></div>
-
-<header class="nav" id="nav">
-  <a class="nav__logo" href="#top" aria-label="Patty, back to top">PATTY</a>
-  <nav class="nav__links" aria-label="Sections">
-    <a href="#craft">The craft</a>
-    <a href="#build">The build</a>
-    <a href="#menu">Menu</a>
-    <a href="#visit">Find us</a>
-  </nav>
-  <a class="btn btn--small" href="#visit">Order pickup</a>
-</header>
-
-<main id="top">
-
-  <section class="hero" id="hero">
-    <div class="hero__media">
-      <video class="hero__video" autoplay muted loop playsinline preload="auto" poster="assets/img/hero.webp">
-        <source src="assets/video/hero.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="hero__shade" aria-hidden="true"></div>
-    <div class="hero__inner">
-      <p class="eyebrow"><span>// 01</span> Premium smash burgers, est. 2021</p>
-      <h1 class="hero__title" aria-label="Patty"><span aria-hidden="true">P</span><span aria-hidden="true">A</span><span aria-hidden="true">T</span><span aria-hidden="true">T</span><span aria-hidden="true">Y</span></h1>
-      <p class="hero__sub">Smashed to order. <em>Never</em> flipped.</p>
-      <div class="hero__actions">
-        <a class="btn" href="#menu">See the menu</a>
-        <a class="btn btn--ghost" href="#visit">Find us</a>
-      </div>
-    </div>
-    <div class="hero__cue" aria-hidden="true"><span>Scroll</span><i></i></div>
-  </section>
-
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker__track">
-      <div class="ticker__group"><span>Smashed to order</span><span>80/20 chuck &amp; brisket</span><span>Brioche baked daily</span><span>Never frozen</span><span>Open late</span><span>Downtown since 2021</span></div>
-      <div class="ticker__group"><span>Smashed to order</span><span>80/20 chuck &amp; brisket</span><span>Brioche baked daily</span><span>Never frozen</span><span>Open late</span><span>Downtown since 2021</span></div>
-    </div>
-  </div>
-
-  <section class="craft" id="craft">
-    <div class="craft__media">
-      <figure class="craft__frame is-active" data-step="1"><img src="assets/img/kitchen.webp" alt="" loading="lazy"></figure>
-      <figure class="craft__frame" data-step="2"><video muted loop playsinline preload="none" poster="assets/img/smash.webp"><source src="assets/video/smash.mp4" type="video/mp4"></video></figure>
-      <figure class="craft__frame" data-step="3"><img src="assets/img/cheese.webp" alt="" loading="lazy"></figure>
-    </div>
-    <div class="craft__copy">
-      <header class="section-head" data-reveal="children">
-        <p class="eyebrow"><span>// 02</span> The craft</p>
-        <h2>Three things we <em>refuse</em> to rush.</h2>
-      </header>
-      <article class="craft__step" data-step="1" data-reveal="children">
-        <p class="craft__num"><b data-count="113">0</b><small>grams per ball</small></p>
-        <h3>The beef</h3>
-        <p>80/20 chuck and brisket, ground every morning before the doors open. Never frozen, never pre-formed. Every ball is weighed by hand, because the scale doesn't lie.</p>
-      </article>
-      <article class="craft__step" data-step="2" data-reveal="children">
-        <p class="craft__num"><b data-count="230">0</b><small>°C on the flat-top</small></p>
-        <h3>The smash</h3>
-        <p>Ten seconds under a heavy steel press. Maximum contact, maximum crust, and a lacy caramelised edge you can hear from the counter. One flip. Never early.</p>
-      </article>
-      <article class="craft__step" data-step="3" data-reveal="children">
-        <p class="craft__num"><b data-count="90">0</b><small>seconds, ball to bun</small></p>
-        <h3>The melt</h3>
-        <p>One slice of American, because nothing else melts like it. Brioche from our own oven, toasted in beef fat. Ninety seconds from the griddle to your hands.</p>
-      </article>
-    </div>
-  </section>
-
-  <section class="build" id="build">
-    <div class="build__pin">
-      <header class="section-head build__head">
-        <p class="eyebrow"><span>// 03</span> The build</p>
-        <h2>Five layers. <em>Zero</em> shortcuts.</h2>
-      </header>
-      <div class="stack" id="stack" role="img" aria-label="The Patty double smash burger, shown layer by layer">
-        <img class="stack__final" src="assets/img/burger.webp" alt="">
-      </div>
-      <ul class="build__captions" id="captions" aria-hidden="true">
-        <li>Sesame brioche, toasted in beef fat</li>
-        <li>Pickles &amp; shaved red onion</li>
-        <li>Second patty. Yes, always.</li>
-        <li>Smashed patty, American cheese</li>
-        <li>Patty sauce on a toasted heel</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="menu" id="menu">
-    <div class="menu__pin">
-      <header class="section-head menu__head" data-reveal="children">
-        <div>
-          <p class="eyebrow"><span>// 04</span> The line-up</p>
-          <h2>Seven things. <em>All</em> of them good.</h2>
-        </div>
-        <p class="menu__hint">Keep scrolling</p>
-      </header>
-      <ul class="menu__track" id="menuTrack">
-        <li class="card">
-          <figure class="card__media"><img src="assets/img/menu-patty.webp" alt="The Patty: a double smash burger with melted American cheese" loading="lazy"></figure>
-          <div class="card__body"><h3 class="card__name">The Patty</h3><p class="card__price">$14</p><p class="card__desc">Double smash, American cheese, pickles, shaved onion, Patty sauce.</p></div>
-        </li>
-        <li class="card">
-          <figure class="card__media"><img src="assets/img/menu-single.webp" alt="The Single smash burger" loading="lazy"></figure>
-          <div class="card__body"><h3 class="card__name">The Single</h3><p class="card__price">$10</p><p class="card__desc">One smashed patty, American cheese, pickles, onion, Patty sauce.</p></div>
-        </li>
-        <li class="card">
-          <figure class="card__media"><img src="assets/img/menu-truffle.webp" alt="Truffle Shroom burger with roasted mushrooms" loading="lazy"></figure>
-          <div class="card__body"><h3 class="card__name">Truffle Shroom</h3><p class="card__price">$17</p><p class="card__desc">Double smash, Swiss, roasted mushrooms, truffle mayo.</p></div>
-        </li>
-        <li class="card">
-          <figure class="card__media"><img src="assets/img/menu-bacon.webp" alt="Bacon Jam burger with crispy onions" loading="lazy"></figure>
-          <div class="card__body"><h3 class="card__name">Bacon Jam</h3><p class="card__price">$16</p><p class="card__desc">Double smash, sharp cheddar, smoked bacon jam, crispy onions.</p></div>
-        </li>
-        <li class="card">
-          <figure class="card__media"><img src="assets/img/menu-firebird.webp" alt="Fire Bird crispy chicken sandwich with hot honey" loading="lazy"></figure>
-          <div class="card__body"><h3 class="card__name">Fire Bird</h3><p class="card__price">$15</p><p class="card__desc">Buttermilk-fried chicken thigh, hot honey, slaw, pickles.</p></div>
-        </li>
-        <li class="card">
-          <figure class="card__media"><img src="assets/img/menu-fries.webp" alt="Parm Crinkles: crinkle-cut fries with parmesan" loading="lazy"></figure>
-          <div class="card__body"><h3 class="card__name">Parm Crinkles</h3><p class="card__price">$7</p><p class="card__desc">Crinkle-cut fries, parmesan, parsley, a pot of Patty sauce.</p></div>
-        </li>
-        <li class="card">
-          <figure class="card__media"><img src="assets/img/menu-shake.webp" alt="Vanilla Malt shake in a tall glass" loading="lazy"></figure>
-          <div class="card__body"><h3 class="card__name">Vanilla Malt</h3><p class="card__price">$8</p><p class="card__desc">Thick vanilla malt shake, whipped cream, paper straw.</p></div>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="sear" id="sear">
-    <div class="sear__media">
-      <video muted loop playsinline preload="none" poster="assets/img/kitchen.webp" data-lazy>
-        <source src="assets/video/kitchen.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="sear__shade" aria-hidden="true"></div>
-    <div class="sear__inner" data-reveal="children">
-      <p class="eyebrow"><span>// 05</span> The line</p>
-      <h2 class="sear__title">We smash.<br>We don't <em>flip</em>.</h2>
-      <p class="sear__lede">One press, one slice of cheese, ninety seconds of undivided attention. That's the whole trick, and we do it about twelve hundred times a day.</p>
-      <dl class="stats">
-        <div><dt>Patties a day</dt><dd><b data-count="1200">0</b></dd></div>
-        <div><dt>Griddles</dt><dd><b data-count="2">0</b></dd></div>
-        <div><dt>One recipe since</dt><dd><b data-count="2021" data-format="plain">0</b></dd></div>
-      </dl>
-    </div>
-  </section>
-
-  <section class="visit" id="visit">
-    <figure class="visit__media"><img src="assets/img/storefront.webp" alt="The Patty storefront at night with its amber neon sign lit" loading="lazy"></figure>
-    <div class="visit__inner" data-reveal="children">
-      <header class="section-head">
-        <p class="eyebrow"><span>// 06</span> Find us</p>
-        <h2>Downtown, <em>under</em> the neon.</h2>
-      </header>
-      <dl class="ticket">
-        <div class="ticket__row"><dt>Address</dt><dd>48 Foundry Street<br>Downtown</dd></div>
-        <div class="ticket__row"><dt>Mon – Thu</dt><dd>11:30 – 22:00</dd></div>
-        <div class="ticket__row"><dt>Fri – Sat</dt><dd>11:30 – 01:00</dd></div>
-        <div class="ticket__row"><dt>Sun</dt><dd>12:00 – 21:00</dd></div>
-        <div class="ticket__row"><dt>Phone</dt><dd>(555) 014-7288</dd></div>
-      </dl>
-      <div class="visit__actions">
-        <a class="btn" href="tel:+15550147288">Order pickup</a>
-        <a class="btn btn--ghost" href="mailto:hello@eatpatty.com">Book the counter</a>
-      </div>
-    </div>
-  </section>
-
+<main>
+  <h1>Sites in this repository</h1>
+  <ul>
+    <li><a href="patty/"><b>Patty</b><span>Premium smash burgers, dark scroll-driven page with video backgrounds.</span></a></li>
+    <li><a href="inerg/"><b>INER-G</b><span>Lebanese lubricants company, light and dark themes, pouring-bottle hero.</span></a></li>
+  </ul>
+  <p>Each site lives in its own folder and runs on its own. Add a folder, add it here.</p>
 </main>
-
-<footer class="footer">
-  <div class="footer__top" data-reveal="children">
-    <div><p class="footer__k">Follow</p><a href="#" title="Instagram (placeholder link)">Instagram @eatpatty</a><a href="#" title="TikTok (placeholder link)">TikTok @eatpatty</a></div>
-    <div><p class="footer__k">Talk</p><a href="mailto:hello@eatpatty.com">hello@eatpatty.com</a><a href="tel:+15550147288">(555) 014-7288</a></div>
-    <div><p class="footer__k">Hours</p><p>Open seven days.<br>Late on weekends.</p></div>
-  </div>
-  <p class="footer__mark" aria-hidden="true">PATTY</p>
-  <p class="footer__legal">© 2026 Patty Burger Co. An imaginary restaurant with a very real appetite.</p>
-</footer>
-
-<script id="layers-data" type="application/json">{"width":1360,"height":2048,"layers":[{"file":"layer-1.webp","x":210,"y":41,"w":942,"h":497},{"file":"layer-2.webp","x":272,"y":570,"w":822,"h":274},{"file":"layer-3.webp","x":160,"y":858,"w":1037,"h":353},{"file":"layer-4.webp","x":176,"y":1230,"w":1039,"h":357},{"file":"layer-5.webp","x":250,"y":1600,"w":860,"h":411}]}</script>
-<script src="js/vendor/gsap.min.js"></script>
-<script src="js/vendor/ScrollTrigger.min.js"></script>
-<script src="js/vendor/lenis.min.js"></script>
-<script src="js/main.js"></script>
 </body>
 </html>
