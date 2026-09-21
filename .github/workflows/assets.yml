@@ -19,8 +19,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install pillow
-      - run: ffmpeg -version | head -1
+      - run: pip install pillow imageio-ffmpeg
       - name: Vendor GSAP and Lenis from npm
         run: |
           mkdir -p js/vendor /tmp/vendor && cd /tmp/vendor
