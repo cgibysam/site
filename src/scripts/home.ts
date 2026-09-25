@@ -47,8 +47,8 @@ if (!reduceMotion && layers.length) {
   });
 
   timeline.to('[data-burger-copy]', {
-    opacity: 0.15,
-    y: -28,
+    opacity: 0.42,
+    y: -16,
     duration: 0.4
   }, 0.15);
 
