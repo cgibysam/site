@@ -39,6 +39,25 @@ async function openPage({ width, height, reducedMotion = false, label }) {
 {
   const page = await openPage({ width: 390, height: 844, reducedMotion: true, label: 'mobile-static' });
   await page.screenshot({ path: 'artifacts/mobile-static.png', fullPage: true });
+
+  const menu = page.locator('.mobile-nav');
+  if (!(await menu.isVisible())) {
+    throw new Error('Mobile navigation control is not visible at 390px.');
+  }
+  await page.locator('.mobile-nav summary').click();
+  if (!(await page.locator('.mobile-nav__panel').isVisible())) {
+    throw new Error('Mobile navigation panel did not open.');
+  }
+  await page.screenshot({ path: 'artifacts/mobile-menu-open.png', fullPage: false });
+
+  const overflow = await page.evaluate(() => ({
+    scrollWidth: document.documentElement.scrollWidth,
+    clientWidth: document.documentElement.clientWidth
+  }));
+  if (overflow.scrollWidth > overflow.clientWidth + 1) {
+    throw new Error(`Unexpected mobile horizontal overflow: ${overflow.scrollWidth}px > ${overflow.clientWidth}px`);
+  }
+
   await page.close();
 }
 
@@ -46,6 +65,18 @@ async function openPage({ width, height, reducedMotion = false, label }) {
 {
   const page = await openPage({ width: 1440, height: 1000, label: 'desktop-motion' });
   await page.screenshot({ path: 'artifacts/desktop-hero-motion.png', fullPage: false });
+
+  const structure = await page.evaluate(() => ({
+    h1Count: document.querySelectorAll('h1').length,
+    mainCount: document.querySelectorAll('main').length,
+    navCount: document.querySelectorAll('nav').length,
+    title: document.title,
+    robots: document.querySelector('meta[name="robots"]')?.getAttribute('content') ?? ''
+  }));
+  if (structure.h1Count !== 1) throw new Error(`Expected exactly one h1, found ${structure.h1Count}`);
+  if (structure.mainCount !== 1) throw new Error(`Expected exactly one main landmark, found ${structure.mainCount}`);
+  if (!structure.title) throw new Error('Document title is empty.');
+  if (!structure.robots.includes('noindex')) throw new Error('Demo noindex protection is missing.');
 
   const storyTop = await page.locator('#story').evaluate((element) => element.offsetTop);
   await page.evaluate((y) => window.scrollTo({ top: y + 1100, behavior: 'instant' }), storyTop);
