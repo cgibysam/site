@@ -1,0 +1,63 @@
+name: Demo Website Verify
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.17.1
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Astro check
+        run: pnpm check
+
+      - name: Production build
+        run: pnpm build
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Start preview
+        run: |
+          pnpm exec astro preview --host 127.0.0.1 --port 4321 > /tmp/astro-preview.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4321 >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/astro-preview.log
+          exit 1
+
+      - name: Capture visual QA and browser errors
+        run: pnpm capture
+
+      - name: Upload QA evidence and generated lockfile
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-qa
+          path: |
+            artifacts/*
+            pnpm-lock.yaml
+          if-no-files-found: error

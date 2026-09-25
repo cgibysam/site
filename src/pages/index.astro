@@ -1,0 +1,672 @@
+---
+import BurgerStack from '../components/BurgerStack.astro';
+import '../styles/global.css';
+
+const ingredients = [
+  ['01', 'Crown', 'Toasted sesame bun'],
+  ['02', 'Snap', 'Leaf + tomato'],
+  ['03', 'Melt', 'Sharp cheese'],
+  ['04', 'Fire', 'Charred patty'],
+  ['05', 'Finish', 'Sauce + bottom bun']
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>STACK — Cinematic Burger Story Demo</title>
+    <meta name="description" content="A fictional cinematic restaurant concept created to test CGI by Sam Agency OS website standards." />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="theme-color" content="#f6efe5" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://example.invalid/" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header container">
+      <a class="brand" href="#top" aria-label="STACK home">
+        <span class="brand__mark">S</span>
+        <span>STACK</span>
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#story">Breakdown</a>
+        <a href="#system">System</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <details class="mobile-nav">
+        <summary>Menu</summary>
+        <nav class="mobile-nav__panel" aria-label="Mobile navigation">
+          <a href="#story">Breakdown</a>
+          <a href="#system">System</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </details>
+      <span class="demo-badge">Fictional demo</span>
+    </header>
+
+    <main id="main">
+      <section id="top" class="hero" data-hero>
+        <div class="hero__spotlight" aria-hidden="true"></div>
+        <div class="container hero__grid">
+          <div class="hero__copy">
+            <p class="eyebrow">A CGI by Sam systems test</p>
+            <h1 class="display">Built to<br /><em>break apart.</em></h1>
+            <p class="hero__lede">A fictional burger house used to test whether premium motion, semantic structure, accessibility and performance can live in the same build.</p>
+            <div class="hero__actions">
+              <a class="button" href="#story">Pull it apart <span aria-hidden="true">↓</span></a>
+              <a class="button button--ghost" href="#system">See the system</a>
+            </div>
+          </div>
+          <div class="hero__visual" role="img" aria-label="Stylized stacked burger illustration">
+            <BurgerStack />
+            <span class="orbit-label orbit-label--one">7 layers</span>
+            <span class="orbit-label orbit-label--two">1 story</span>
+          </div>
+        </div>
+        <div class="hero__ticker" aria-hidden="true">
+          <span>SCROLL / SPLIT / INSPECT / REBUILD /</span>
+          <span>SCROLL / SPLIT / INSPECT / REBUILD /</span>
+        </div>
+      </section>
+
+      <section id="story" class="story" data-story>
+        <div class="story__stage" data-story-stage>
+          <div class="story__glow" data-story-glow aria-hidden="true"></div>
+          <div class="container story__layout">
+            <div class="story__copy" data-burger-copy>
+              <p class="eyebrow">Scroll story 01</p>
+              <h2 class="section-title">One stack.<br />Every layer earns its place.</h2>
+              <p>Motion has a job here: reveal hierarchy, not hide it. The burger separates while the text stays readable and the reduced-motion version remains complete.</p>
+            </div>
+
+            <div class="story__burger">
+              <BurgerStack />
+              <div class="ingredient-labels" aria-hidden="true">
+                <span class="ingredient-label ingredient-label--1" data-ingredient-label>Bun / toasted</span>
+                <span class="ingredient-label ingredient-label--2" data-ingredient-label>Leaf / crisp</span>
+                <span class="ingredient-label ingredient-label--3" data-ingredient-label>Cheese / melt</span>
+                <span class="ingredient-label ingredient-label--4" data-ingredient-label>Patty / char</span>
+                <span class="ingredient-label ingredient-label--5" data-ingredient-label>Sauce / finish</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="manifesto container" data-reveal>
+        <div>
+          <p class="eyebrow">Not animation for animation’s sake</p>
+          <h2 class="section-title">Taste first.<br />Then motion.</h2>
+        </div>
+        <div class="manifesto__body">
+          <p>Every effect should make the story clearer, the product more desirable, or the experience more memorable. If it only makes the browser work harder, it does not make the cut.</p>
+          <div class="principle-list" role="list" aria-label="Design principles">
+            <span role="listitem">Purposeful motion</span>
+            <span role="listitem">Mobile recomposition</span>
+            <span role="listitem">Reduced-motion path</span>
+            <span role="listitem">No fake claims</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="ingredients container" aria-labelledby="ingredients-title">
+        <div class="ingredients__heading" data-reveal>
+          <p class="eyebrow">Anatomy</p>
+          <h2 id="ingredients-title" class="section-title">The build, without the noise.</h2>
+        </div>
+        <ol class="ingredient-grid">
+          {ingredients.map(([number, title, detail]) => (
+            <li class="ingredient-card" data-reveal>
+              <span class="ingredient-card__number">{number}</span>
+              <strong>{title}</strong>
+              <span>{detail}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section id="system" class="system-section">
+        <div class="container">
+          <div class="system-section__intro" data-reveal>
+            <p class="eyebrow">Agency OS demo</p>
+            <h2 class="section-title">The invisible work is part of the design.</h2>
+          </div>
+          <div class="system-grid">
+            <article data-reveal>
+              <span>01</span>
+              <h3>Accessible by default</h3>
+              <p>Semantic landmarks, keyboard access, visible focus and reduced-motion behavior are part of the build—not a patch after launch.</p>
+            </article>
+            <article data-reveal>
+              <span>02</span>
+              <h3>Performance-aware motion</h3>
+              <p>Native scrolling stays intact. The main interaction uses transforms, is scoped to one story section and is skipped for reduced motion.</p>
+            </article>
+            <article data-reveal>
+              <span>03</span>
+              <h3>Search-safe staging</h3>
+              <p>This fictional test is intentionally blocked from indexing while still using clean semantic content and metadata patterns.</p>
+            </article>
+            <article data-reveal>
+              <span>04</span>
+              <h3>Cross-AI instructions</h3>
+              <p>Project adapters point different agents to the same Agency OS baseline so the rules do not fragment across tools.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="closing">
+        <div class="container closing__inner" data-reveal>
+          <p class="eyebrow">End of demo / start of review</p>
+          <h2 class="display closing__title">Does it<br /><em>feel authored?</em></h2>
+          <p>This is a fictional concept. The next step is not to ship it—it is to inspect it, find what feels generic or weak, and teach Agency OS what to do better next time.</p>
+          <a class="button" href="#top">Run it again <span aria-hidden="true">↑</span></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer container">
+      <span>STACK / fictional concept</span>
+      <span>CGI by Sam — Agency OS V1 demo</span>
+    </footer>
+
+    <script>
+      import '../scripts/home';
+    </script>
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+    z-index: 100;
+    padding: .75rem 1rem;
+    background: var(--ink);
+    color: var(--paper);
+    transform: translateY(-160%);
+  }
+  .skip-link:focus { transform: translateY(0); }
+
+  .site-header {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 20;
+    height: 6rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    width: fit-content;
+    text-decoration: none;
+    font-weight: 900;
+    letter-spacing: -.04em;
+  }
+
+  .brand__mark {
+    display: grid;
+    place-items: center;
+    width: 2.15rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: .84rem;
+  }
+
+  .nav {
+    display: flex;
+    gap: 1.6rem;
+    font-size: .78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .11em;
+  }
+
+  .nav a {
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .nav a:hover,
+  .nav a:focus-visible { border-color: currentColor; }
+
+  .mobile-nav {
+    display: none;
+    position: relative;
+    justify-self: end;
+  }
+
+  .mobile-nav summary {
+    list-style: none;
+    cursor: pointer;
+    padding: .52rem .72rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: .68rem;
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+  }
+
+  .mobile-nav summary::-webkit-details-marker { display: none; }
+
+  .mobile-nav__panel {
+    position: absolute;
+    right: 0;
+    top: calc(100% + .55rem);
+    min-width: 11rem;
+    display: grid;
+    padding: .55rem;
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: rgba(246,239,229,.96);
+    box-shadow: 0 1rem 3rem rgba(23,18,15,.12);
+    backdrop-filter: blur(14px);
+  }
+
+  .mobile-nav__panel a {
+    padding: .72rem .75rem;
+    border-radius: .6rem;
+    text-decoration: none;
+    font-size: .76rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+
+  .mobile-nav__panel a:hover,
+  .mobile-nav__panel a:focus-visible { background: rgba(23,18,15,.06); }
+
+  .demo-badge {
+    justify-self: end;
+    padding: .5rem .75rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: .13em;
+  }
+
+  .hero {
+    --pointer-x: 50%;
+    --pointer-y: 50%;
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    align-items: center;
+    padding: 7rem 0 5rem;
+    overflow: clip;
+    isolation: isolate;
+  }
+
+  .hero__spotlight {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(circle at var(--pointer-x) var(--pointer-y), rgba(216,255,95,.24), transparent 21rem),
+      linear-gradient(135deg, transparent 55%, rgba(232,166,66,.13));
+    transition: background .15s linear;
+  }
+
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(20rem, .9fr);
+    align-items: center;
+    gap: clamp(2rem, 4vw, 5rem);
+  }
+
+  .hero__copy { position: relative; z-index: 2; }
+
+  .hero__lede {
+    max-width: 42rem;
+    margin: 2rem 0 0;
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8rem;
+    margin-top: 2rem;
+  }
+
+  .hero__visual {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 32rem;
+  }
+
+  .orbit-label {
+    position: absolute;
+    padding: .62rem .8rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(246,239,229,.75);
+    backdrop-filter: blur(12px);
+    font-size: .7rem;
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+  }
+
+  .orbit-label--one { top: 17%; right: 4%; transform: rotate(8deg); }
+  .orbit-label--two { bottom: 16%; left: 1%; transform: rotate(-8deg); }
+
+  .hero__ticker {
+    position: absolute;
+    inset: auto 0 0;
+    display: flex;
+    gap: 1.3rem;
+    padding: .78rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+    border-block: 1px solid var(--border);
+    font-size: .72rem;
+    font-weight: 900;
+    letter-spacing: .18em;
+  }
+
+  .hero__ticker span { min-width: max-content; }
+
+  .story {
+    position: relative;
+    min-height: 3200px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .story__stage {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    align-items: center;
+    overflow: clip;
+  }
+
+  .story__glow {
+    position: absolute;
+    width: min(60rem, 90vw);
+    aspect-ratio: 1;
+    left: 55%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(.78);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,166,66,.22), transparent 65%);
+    filter: blur(16px);
+    opacity: .5;
+  }
+
+  .story__layout {
+    display: grid;
+    grid-template-columns: .85fr 1.15fr;
+    align-items: center;
+    gap: clamp(2rem, 6vw, 7rem);
+  }
+
+  .story__copy {
+    position: relative;
+    z-index: 3;
+    max-width: 34rem;
+  }
+
+  .story__copy .eyebrow::before { background: var(--acid); }
+
+  .story__copy p:last-child {
+    max-width: 30rem;
+    margin-top: 1.5rem;
+    color: rgba(246,239,229,.68);
+    line-height: 1.65;
+  }
+
+  .story__burger {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 45rem;
+  }
+
+  .ingredient-labels {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .ingredient-label {
+    position: absolute;
+    padding: .5rem .7rem;
+    border: 1px solid rgba(246,239,229,.22);
+    border-radius: 999px;
+    color: rgba(246,239,229,.82);
+    background: rgba(23,18,15,.72);
+    backdrop-filter: blur(8px);
+    font-size: .68rem;
+    text-transform: uppercase;
+    letter-spacing: .13em;
+  }
+  .ingredient-label--1 { top: 11%; right: 6%; }
+  .ingredient-label--2 { top: 30%; left: 0; }
+  .ingredient-label--3 { top: 47%; right: -2%; }
+  .ingredient-label--4 { top: 63%; left: 5%; }
+  .ingredient-label--5 { bottom: 11%; right: 8%; }
+
+  .manifesto {
+    min-height: 78svh;
+    display: grid;
+    grid-template-columns: 1fr .8fr;
+    gap: clamp(3rem, 7vw, 9rem);
+    align-items: center;
+    padding-block: 8rem;
+  }
+
+  .manifesto__body > p {
+    margin: 0;
+    font-size: clamp(1.3rem, 2vw, 2rem);
+    line-height: 1.42;
+    letter-spacing: -.025em;
+  }
+
+  .principle-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .55rem;
+    margin-top: 2rem;
+  }
+
+  .principle-list span {
+    padding: .6rem .75rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: .74rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+
+  .ingredients { padding-block: 6rem 10rem; }
+
+  .ingredients__heading { max-width: 52rem; }
+
+  .ingredient-grid {
+    list-style: none;
+    padding: 0;
+    margin: 4rem 0 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border-top: 1px solid var(--border);
+  }
+
+  .ingredient-card {
+    min-height: 18rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: .5rem;
+    padding: 1.25rem;
+    border-right: 1px solid var(--border);
+  }
+
+  .ingredient-card:last-child { border-right: 0; }
+
+  .ingredient-card__number {
+    margin-bottom: auto;
+    color: var(--muted);
+    font-size: .72rem;
+    font-weight: 800;
+  }
+
+  .ingredient-card strong {
+    font-size: clamp(1.4rem, 2vw, 2rem);
+    letter-spacing: -.04em;
+  }
+
+  .ingredient-card > span:last-child { color: var(--muted); }
+
+  .system-section {
+    padding-block: 9rem;
+    background: var(--paper-deep);
+    border-block: 1px solid var(--border);
+  }
+
+  .system-section__intro { max-width: 55rem; }
+
+  .system-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 4rem;
+    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+  }
+
+  .system-grid article {
+    min-height: 20rem;
+    padding: 1.5rem;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .system-grid article > span {
+    font-size: .72rem;
+    color: var(--muted);
+  }
+
+  .system-grid h3 {
+    max-width: 15rem;
+    margin: 4.5rem 0 1rem;
+    font-size: 2rem;
+    line-height: 1;
+    letter-spacing: -.045em;
+  }
+
+  .system-grid p {
+    max-width: 31rem;
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .closing {
+    padding-block: 10rem;
+    background: var(--acid);
+    overflow: clip;
+  }
+
+  .closing__inner { max-width: 70rem; }
+
+  .closing__title { margin-top: 2rem; }
+
+  .closing__inner > p:not(.eyebrow) {
+    max-width: 42rem;
+    margin: 2rem 0;
+    font-size: 1.1rem;
+    line-height: 1.65;
+  }
+
+  .footer {
+    min-height: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    color: var(--muted);
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--tomato);
+    outline-offset: 4px;
+  }
+
+  @media (max-width: 900px) {
+    .site-header {
+      grid-template-columns: 1fr auto auto;
+    }
+    .nav { display: none; }
+    .mobile-nav { display: block; }
+    .hero__grid,
+    .story__layout,
+    .manifesto {
+      grid-template-columns: 1fr;
+    }
+    .hero__copy { padding-top: 4rem; }
+    .hero__visual { min-height: 27rem; }
+    .story__stage { align-items: start; padding-top: 5rem; }
+    .story__copy { max-width: 38rem; }
+    .story__burger { min-height: 38rem; }
+    .ingredient-grid { grid-template-columns: repeat(2, 1fr); }
+    .ingredient-card { border-bottom: 1px solid var(--border); }
+    .system-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .container { width: min(calc(100% - 1.4rem), var(--max)); }
+    .site-header {
+      height: 4.6rem;
+      grid-template-columns: 1fr auto;
+    }
+    .demo-badge { display: none; }
+    .hero { padding-top: 6rem; }
+    .hero__visual { min-height: 23rem; }
+    .story { min-height: 2900px; }
+    .story__burger { min-height: 31rem; }
+    .ingredient-label { display: none; }
+    .manifesto { min-height: auto; padding-block: 6rem; }
+    .ingredients { padding-block: 5rem 7rem; }
+    .ingredient-grid { grid-template-columns: 1fr; }
+    .ingredient-card { min-height: 12rem; border-right: 0; }
+    .system-section { padding-block: 6rem; }
+    .system-grid article { min-height: 16rem; }
+    .system-grid h3 { margin-top: 3rem; }
+    .closing { padding-block: 7rem; }
+    .footer { align-items: flex-start; flex-direction: column; justify-content: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .story {
+      min-height: auto;
+      padding-block: 6rem;
+    }
+    .story__stage {
+      min-height: auto;
+      overflow: visible;
+    }
+    .story__layout { align-items: start; }
+    .story__burger { min-height: 30rem; }
+    .ingredient-label { opacity: 1 !important; transform: none !important; }
+  }
+</style>
