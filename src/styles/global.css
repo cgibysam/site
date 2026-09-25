@@ -76,8 +76,14 @@ a { color: inherit; }
 
 .display em {
   font-style: normal;
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--ink);
+  color: var(--ink);
+}
+
+@supports (-webkit-text-stroke: 1px black) {
+  .display em {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--ink);
+  }
 }
 
 .section-title {
