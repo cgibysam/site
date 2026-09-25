@@ -11,7 +11,7 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -34,3 +34,28 @@ jobs:
 
       - name: Production build
         run: pnpm build
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Start preview
+        run: |
+          pnpm exec astro preview --host 127.0.0.1 --port 4321 > /tmp/astro-preview.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4321 >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/astro-preview.log
+          exit 1
+
+      - name: Capture visual QA
+        run: pnpm capture
+
+      - name: Upload visual QA
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-qa
+          path: artifacts/*.png
+          if-no-files-found: error
