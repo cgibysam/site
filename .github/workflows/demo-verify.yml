@@ -50,12 +50,14 @@ jobs:
           cat /tmp/astro-preview.log
           exit 1
 
-      - name: Capture visual QA
+      - name: Capture visual QA and browser errors
         run: pnpm capture
 
-      - name: Upload visual QA
+      - name: Upload QA evidence and generated lockfile
         uses: actions/upload-artifact@v4
         with:
-          name: visual-qa
-          path: artifacts/*.png
+          name: demo-qa
+          path: |
+            artifacts/*
+            pnpm-lock.yaml
           if-no-files-found: error
