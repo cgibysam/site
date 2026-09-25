@@ -36,6 +36,14 @@ const ingredients = [
         <a href="#system">System</a>
         <a href="#contact">Contact</a>
       </nav>
+      <details class="mobile-nav">
+        <summary>Menu</summary>
+        <nav class="mobile-nav__panel" aria-label="Mobile navigation">
+          <a href="#story">Breakdown</a>
+          <a href="#system">System</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </details>
       <span class="demo-badge">Fictional demo</span>
     </header>
 
@@ -52,7 +60,7 @@ const ingredients = [
               <a class="button button--ghost" href="#system">See the system</a>
             </div>
           </div>
-          <div class="hero__visual" aria-label="Stylized stacked burger illustration">
+          <div class="hero__visual" role="img" aria-label="Stylized stacked burger illustration">
             <BurgerStack />
             <span class="orbit-label orbit-label--one">7 layers</span>
             <span class="orbit-label orbit-label--two">1 story</span>
@@ -232,6 +240,53 @@ const ingredients = [
   }
   .nav a:hover,
   .nav a:focus-visible { border-color: currentColor; }
+
+  .mobile-nav {
+    display: none;
+    position: relative;
+    justify-self: end;
+  }
+
+  .mobile-nav summary {
+    list-style: none;
+    cursor: pointer;
+    padding: .52rem .72rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: .68rem;
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+  }
+
+  .mobile-nav summary::-webkit-details-marker { display: none; }
+
+  .mobile-nav__panel {
+    position: absolute;
+    right: 0;
+    top: calc(100% + .55rem);
+    min-width: 11rem;
+    display: grid;
+    padding: .55rem;
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: rgba(246,239,229,.96);
+    box-shadow: 0 1rem 3rem rgba(23,18,15,.12);
+    backdrop-filter: blur(14px);
+  }
+
+  .mobile-nav__panel a {
+    padding: .72rem .75rem;
+    border-radius: .6rem;
+    text-decoration: none;
+    font-size: .76rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+
+  .mobile-nav__panel a:hover,
+  .mobile-nav__panel a:focus-visible { background: rgba(23,18,15,.06); }
 
   .demo-badge {
     justify-self: end;
@@ -559,9 +614,10 @@ const ingredients = [
 
   @media (max-width: 900px) {
     .site-header {
-      grid-template-columns: 1fr auto;
+      grid-template-columns: 1fr auto auto;
     }
     .nav { display: none; }
+    .mobile-nav { display: block; }
     .hero__grid,
     .story__layout,
     .manifesto {
@@ -579,8 +635,11 @@ const ingredients = [
 
   @media (max-width: 600px) {
     .container { width: min(calc(100% - 1.4rem), var(--max)); }
-    .site-header { height: 4.6rem; }
-    .demo-badge { font-size: .58rem; }
+    .site-header {
+      height: 4.6rem;
+      grid-template-columns: 1fr auto;
+    }
+    .demo-badge { display: none; }
     .hero { padding-top: 6rem; }
     .hero__visual { min-height: 23rem; }
     .story { min-height: 2900px; }
