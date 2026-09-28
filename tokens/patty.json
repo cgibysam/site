@@ -1,0 +1,28 @@
+{
+  "brand": "patty",
+  "site": "patty/",
+  "source": "patty/css/styles.css :root",
+  "colorScheme": "dark",
+  "color": {
+    "char": "#0b0908",
+    "smoke": "#16120f",
+    "ash": "#2a231d",
+    "bone": "#f1e7d6",
+    "taupe": "#a08e78",
+    "amber": "#f0a830",
+    "amber-hi": "#f7bd57",
+    "sear": "#8c2f1b"
+  },
+  "font": {
+    "display": "\"Bricolage Grotesque\", \"Archivo Black\", \"Arial Black\", Impact, sans-serif",
+    "serif": "\"Instrument Serif\", Georgia, \"Times New Roman\", serif",
+    "mono": "\"DM Mono\", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+  },
+  "layout": {
+    "gutter": "clamp(16px, 4vw, 56px)",
+    "max": "1440px"
+  },
+  "motion": {
+    "ease": "cubic-bezier(.16, 1, .3, 1)"
+  }
+}

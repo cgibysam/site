@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sites</title>
+<meta name="color-scheme" content="light dark">
+<style>
+  :root { --bg: #f4f2ec; --ink: #16181a; --muted: #6a6f6c; --line: #d8d5cc; --card: #ffffff; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #101312; --ink: #eef0ea; --muted: #97a19a; --line: #262c28; --card: #171c19; } }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 56rem; margin: 0 auto; padding: 12vh 24px 15vh; }
+  h1 { font-size: 1.1rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin: 0 0 1.5rem; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+  a { display: block; padding: 1.4rem 1.5rem; background: var(--card); border: 1px solid var(--line); border-radius: 8px; color: inherit; text-decoration: none; transition: transform .2s; }
+  a:hover { transform: translateY(-2px); }
+  b { display: block; font-size: 1.4rem; margin-bottom: .3rem; }
+  span { color: var(--muted); font-size: .92rem; }
+  p { margin: 2rem 0 0; color: var(--muted); font-size: .9rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Sites in this repository</h1>
+  <ul>
+    <li><a href="patty/"><b>Patty</b><span>Premium smash burgers, dark scroll-driven page with video backgrounds.</span></a></li>
+    <li><a href="inerg/"><b>INER-G</b><span>Lebanese lubricants company, light and dark themes, pouring-bottle hero.</span></a></li>
+  </ul>
+  <p>Each site lives in its own folder and runs on its own. Add a folder, add it here.</p>
+</main>
+</body>
+</html>
