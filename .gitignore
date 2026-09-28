@@ -1,7 +1,12 @@
 node_modules/
+.tools/
+artifacts/
+*.blend1
+__pycache__/
 dist/
 .astro/
 .DS_Store
 .env
 .env.*
 !.env.example
+.claude/settings.local.json
