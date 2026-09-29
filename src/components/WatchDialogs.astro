@@ -1,6 +1,7 @@
 ---
 import { existsSync } from 'node:fs';
+import { sequenceVersion } from '../data/watch';
 const filmReady = existsSync('public/media/velorne/assembly-film.mp4');
 ---
     <dialog class="lightbox" data-lightbox aria-label="Study 01 image detail"><form method="dialog"><button type="submit" aria-label="Close image detail">×</button></form><div data-lightbox-image></div></dialog>
-    {filmReady && <dialog class="film-dialog" data-film-dialog aria-label="Study 01 assembly film"><form method="dialog"><button type="submit" aria-label="Close film">×</button></form><video data-film controls playsinline preload="none" poster="/media/velorne/sequence/000.webp" aria-label="Silent film showing the Study 01 watch separating into layers and reassembling"><source data-src="/media/velorne/assembly-film.mp4" type="video/mp4" /></video><p>A silent, illustrative assembly film. The crystal, hands and dial lift to reveal the movement before the watch reassembles.</p></dialog>}
+    {filmReady && <dialog class="film-dialog" data-film-dialog aria-label="Study 01 assembly film"><form method="dialog"><button type="submit" aria-label="Close film">×</button></form><video data-film controls playsinline preload="none" data-poster={`/media/velorne/sequence/000.webp?v=${sequenceVersion}`} aria-label="Silent film showing the Study 01 watch separating into layers and reassembling"><source data-src="/media/velorne/assembly-film.mp4" type="video/mp4" /></video><p>A silent, illustrative assembly film. The crystal, hands and dial lift to reveal the movement before the watch reassembles.</p></dialog>}

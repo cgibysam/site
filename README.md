@@ -44,10 +44,14 @@ CI uses Playwright Chromium. Browser checks cover responsive widths, motion, red
 
 [Asset pipeline](docs/VELORNE-ASSETS.md) · [Model source](assets/source/README.md)
 
-The editable `.blend` and reproducible Python scene script are included. `scripts/optimize-media.mjs` generates responsive WebP derivatives. The frame cache keeps at most ten decoded images and two requests in flight; offscreen and background rendering pauses.
+The editable `.blend` and reproducible Python scene script are included. `scripts/optimize-media.mjs` generates responsive WebP derivatives. Frames load after window load, the frame cache keeps a bounded number of decoded images with two requests in flight, and offscreen and background rendering pauses.
 
 ## Protection
 
 `noindex,nofollow` and `robots.txt` disallow remain. No fake canonical or commercial structured data is emitted. Canonical/social URLs need a real authorized origin. No deployment or merge authorization is implied.
+
+## Dependency audit exception
+
+As of 2026-09-29, `pnpm audit --prod` reports 13 advisories (1 critical, 4 high), all through `astro` 5.x and its bundled `sharp`. Accepted for now because this is a static build (`output: 'static'`) with no server runtime, no SSR, islands, View Transitions or `astro:assets` image optimisation, which is where those advisories apply. Upgrading to Astro 7 is a major-version change that needs approval and a full QA re-run. Re-check this exception before any public deployment. Evidence: `docs/launch-hardening-2026-09-29.md`.
 
 Read `AGENTS.md` for the Agency OS baseline. The old `QA-REPORT-2026-09-25.md` describes the superseded burger implementation, not this watch demo.

@@ -16,7 +16,7 @@ if (video && toggle) {
     const playing = !video.paused;
     toggle.setAttribute('aria-label', playing ? 'Pause background animation' : 'Play background animation');
     toggle.replaceChildren(document.createTextNode(playing ? 'Pause motion' : 'Play motion'));
-    const icon = document.createElement('span'); icon.setAttribute('aria-hidden', 'true'); icon.textContent = playing ? 'Ⅱ' : '▶';
+    const icon = document.createElement('span'); icon.setAttribute('aria-hidden', 'true'); icon.textContent = playing ? 'Ⅱ' : '\u25B6\uFE0E';
     toggle.append(icon);
   };
   const play = async () => {

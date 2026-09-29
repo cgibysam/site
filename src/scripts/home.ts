@@ -1,3 +1,5 @@
+import { afterLoad } from './frames';
+
 // Native controls are available before any animation library loads.
 const menu = document.querySelector<HTMLDetailsElement>('.mobile-nav');
 menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => { menu.open = false; }));
@@ -69,7 +71,8 @@ if (story?.dataset.ready === 'true') {
         if (instruction) instruction.textContent = 'Explore the still assembly and component notes below.';
       }
     }, { rootMargin: '200px' });
-    observer.observe(story);
+    // Even when the page opens at #anatomy, frames wait for window load.
+    void afterLoad().then(() => observer.observe(story));
   }
 }
 
@@ -82,6 +85,7 @@ if (filmDialog && film && filmButton) {
   filmButton.hidden = false;
   filmButton.addEventListener('click', () => {
     const source = film.querySelector('source');
+    if (!film.poster && film.dataset.poster) film.poster = film.dataset.poster;
     if (source && !source.getAttribute('src')) {
       source.src = source.dataset.src!;
       film.load();

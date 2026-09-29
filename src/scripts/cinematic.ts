@@ -1,16 +1,19 @@
-export {};
+import { afterLoad, fitCanvas, frameSize, nearestFrame, progressiveOrder } from './frames';
+
 const root = document.querySelector<HTMLElement>('[data-cinema]');
 const canvas = root?.querySelector<HTMLCanvasElement>('[data-cinema-canvas]');
 const context = canvas?.getContext('2d');
 const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
 const preference = matchMedia('(prefers-reduced-motion: no-preference) and (min-height: 600px)');
 
-// Static chapters are the default. Enhance only after the first real render loads.
+// Static chapters are the default. The inline script in cinematic.astro switches to the film
+// layout before first paint under the same conditions, so enhancing causes no layout shift.
 if (root && canvas && context && root.dataset.ready === 'true' && 'createImageBitmap' in window && !connection?.saveData) {
+  root.dataset.controller = 'cinematic';
   let stop: (() => void) | undefined;
   const start = () => {
     stop?.(); stop = undefined;
-    if (!preference.matches) return;
+    if (!preference.matches) { delete root.dataset.enhanced; return; }
     const stage = root.querySelector<HTMLElement>('[data-cinema-stage]')!;
     const controls = root.querySelector<HTMLElement>('[data-cinema-controls]')!;
     const progressBar = root.querySelector<HTMLElement>('[data-cinema-progress]')!;
@@ -18,17 +21,17 @@ if (root && canvas && context && root.dataset.ready === 'true' && 'createImageBi
     const scenes = Array.from(root.querySelectorAll<HTMLElement>('[data-cinema-scene]'));
     const links = Array.from(root.querySelectorAll<HTMLAnchorElement>('[data-scene-link]'));
     const mobile = innerWidth <= 900;
-    const size = mobile ? 500 : 800;
-    canvas.width = canvas.height = size;
+    const size = frameSize(mobile);
+    fitCanvas(canvas, size);
     const abort = new AbortController();
     const cache = new Map<number, ImageBitmap>();
     const pending = new Set<number>();
     const failed = new Set<number>();
     let queue: number[] = [];
-    let target = 0, paintedPosition = -1, raf = 0;
+    let target = 0, paintedKey = '', raf = 0;
     let displayed = 0, lastTime = 0;
     const blobs = new Map<number, Blob>();
-    let active = false, disposed = false;
+    let active = false, disposed = false, filmReady = false, loaded = false;
     let origin = 0, travel = 1;
     let currentChapter = -1;
     const url = (frame:number) => `/media/velorne/${mobile ? 'sequence-mobile' : 'sequence'}/${String(frame).padStart(3,'0')}.webp?v=${root.dataset.mediaVersion}`;
@@ -54,34 +57,37 @@ if (root && canvas && context && root.dataset.ready === 'true' && 'createImageBi
       instruction.textContent = ['Scroll to look within.','Continue to bring it together.','The complete form. Continue to explore.'][index]!;
     };
     const paint = () => {
-      const frame = cache.get(target);
+      if (document.hidden) return;
       const position=displayed*59;
       const lower=cache.get(Math.floor(position)), upper=cache.get(Math.ceil(position));
-      const canBlend=Boolean(lower && upper);
-      const paintPosition=canBlend ? position : target;
-      if (!frame || paintPosition === paintedPosition || document.hidden) return;
-      context.clearRect(0,0,size,size);
+      // While the target is still loading, hold the closest decoded frame instead of freezing.
+      const nearest=lower && upper ? undefined : nearestFrame(cache,target);
+      if (!(lower && upper) && !nearest) return;
+      const key=lower && upper ? `blend:${position}` : `frame:${nearest!.frame}`;
+      if (key === paintedKey) return;
+      const px=canvas.width;
+      context.clearRect(0,0,px,px);
       if (lower && upper) {
         const fraction=position-Math.floor(position);
         // Interpolate adjacent renders in premultiplied alpha so slow scrolling
         // does not visibly tick through the source sequence's 60 poses.
         context.globalAlpha=1-fraction;
-        context.drawImage(lower,0,0,size,size);
+        context.drawImage(lower,0,0,px,px);
         context.globalCompositeOperation='lighter';
         context.globalAlpha=fraction;
-        context.drawImage(upper,0,0,size,size);
+        context.drawImage(upper,0,0,px,px);
         context.globalAlpha=1;
         context.globalCompositeOperation='source-over';
-      } else context.drawImage(frame,0,0,size,size);
-      canvas.dataset.frame = String(target);
-      paintedPosition = paintPosition;
+      } else context.drawImage(nearest!.bitmap,0,0,px,px);
+      canvas.dataset.frame = String(lower && upper ? target : nearest!.frame);
+      paintedKey = key;
     };
     const trim = () => {
       const farthest = [...cache.keys()].sort((a,b) => Math.abs(b-target) - Math.abs(a-target));
-      while (cache.size > 14) { const key=farthest.shift()!; cache.get(key)?.close(); cache.delete(key); }
+      while (cache.size > 12) { const key=farthest.shift()!; cache.get(key)?.close(); cache.delete(key); }
     };
     const pump = () => {
-      if (disposed || document.hidden) return;
+      if (disposed || document.hidden || !loaded) return;
       while (pending.size < 2 && queue.length) {
         const frame=queue.shift()!;
         if (cache.has(frame) || pending.has(frame) || failed.has(frame)) continue;
@@ -93,9 +99,11 @@ if (root && canvas && context && root.dataset.ready === 'true' && 'createImageBi
           .then(bitmap => {
             if (disposed) { bitmap.close(); return; }
             cache.set(frame,bitmap); trim();
-            if (!active) {
-              active=true; root.dataset.enhanced='true'; controls.hidden=false; canvas.hidden=false;
-              measure(); requestUpdate(); warm();
+            if (!filmReady) {
+              // The active scene's still stood in until now; the rendered film takes over.
+              filmReady=true; root.dataset.film='ready'; canvas.hidden=false;
+              fitCanvas(canvas,size); paintedKey='';
+              requestUpdate(); void warm();
             }
             paint();
           })
@@ -108,9 +116,10 @@ if (root && canvas && context && root.dataset.ready === 'true' && 'createImageBi
           .finally(() => { pending.delete(frame); pump(); });
       }
     };
-    // Keep compressed frames warm, but cap decoded GPU/bitmap memory.
+    // Keep compressed frames warm, coarse to fine, but cap decoded GPU/bitmap memory.
     const warm = async () => {
-      for (let frame=1;frame<60 && !disposed;frame++) {
+      for (const frame of progressiveOrder()) {
+        if (disposed) return;
         if (blobs.has(frame) || pending.has(frame)) continue;
         try {
           const response=await fetch(url(frame),{signal:abort.signal,cache:'force-cache'});
@@ -151,7 +160,7 @@ if (root && canvas && context && root.dataset.ready === 'true' && 'createImageBi
       if (displayed!==desired) requestUpdate();
     };
     const requestUpdate = () => { if (!raf) raf=requestAnimationFrame(update); };
-    const resize = () => { if (active) { measure(); requestUpdate(); } };
+    const resize = () => { if (active) { if (fitCanvas(canvas,size)) paintedKey=''; measure(); requestUpdate(); } };
     const jump = (event:MouseEvent) => {
       if (!active || !(event.currentTarget instanceof HTMLAnchorElement)) return;
       event.preventDefault();
@@ -175,12 +184,16 @@ if (root && canvas && context && root.dataset.ready === 'true' && 'createImageBi
       stage.style.removeProperty("background-color"); canvas.style.removeProperty("scale"); canvas.style.removeProperty("rotate");
       scenes.forEach(scene => scene.querySelector(".cinema-copy")?.removeAttribute("style"));
       scenes.forEach(scene => { scene.inert=false; scene.removeAttribute('aria-hidden'); scene.removeAttribute('data-active'); });
-      delete root.dataset.enhanced; delete root.dataset.chapter;
+      delete root.dataset.enhanced; delete root.dataset.chapter; delete root.dataset.film;
       canvas.hidden=true; controls.hidden=true;
     };
-    queue=[0]; pump();
+    // Chapters follow scroll straight away, with each scene's still in the canvas position.
+    root.dataset.enhanced='true'; controls.hidden=false; active=true;
+    measure(); requestUpdate();
+    // Frames wait for window load so they never compete with the still hero (the LCP image).
+    void afterLoad().then(() => { if (!disposed) { loaded=true; if (!queue.length) queue=[target]; pump(); } });
   };
   preference.addEventListener('change',start);
   window.addEventListener('pagehide',event => { if (!event.persisted) stop?.(); });
   start();
-}
+} else if (root) delete root.dataset.enhanced;

@@ -26,6 +26,18 @@ const scenes = [
   <a class="skip-link" href="#details">Skip the film and explore the watch</a>
   <main id="main">
     <div class="cinema" data-cinema data-media-version={sequenceVersion} data-ready={String(anatomyReady)}>
+      <script is:inline>
+        // Choose the film layout before first paint (same conditions as scripts/cinematic.ts),
+        // so enhancing after frames load causes no layout shift. If the film script never
+        // runs, return to the static chapters once the page has loaded.
+        (function (root) {
+          var connection = navigator.connection;
+          if (root.dataset.ready !== 'true' || !('createImageBitmap' in window) || (connection && connection.saveData)
+            || !matchMedia('(prefers-reduced-motion: no-preference) and (min-height: 600px)').matches) return;
+          root.dataset.enhanced = 'true';
+          addEventListener('load', function () { if (!root.dataset.controller) delete root.dataset.enhanced; });
+        })(document.currentScript.parentElement);
+      </script>
       <div class="cinema-stage" data-cinema-stage>
         <header class="cinema-header"><a class="wordmark" href="#form" aria-label="VELORNE home" data-scene-link="0">VELORNE</a><span>STUDY 01 / OBSIDIAN</span><a href="#details">Explore the watch <span aria-hidden="true">↗</span></a></header>
         <div class="cinema-scenes">
@@ -34,7 +46,7 @@ const scenes = [
             <div class="cinema-still"><ProductImage name={scene.image} alt={scene.alt} eager={index === 0} sizes="(max-width: 700px) 100vw, 740px" /></div>
           </section>)}
         </div>
-        <canvas class="cinema-canvas" width="800" height="800" data-cinema-canvas hidden aria-hidden="true"></canvas>
+        <canvas class="cinema-canvas" width="1200" height="1200" data-cinema-canvas hidden aria-hidden="true"></canvas>
         <div class="cinema-controls" data-cinema-controls hidden>
           <span class="cinema-scroll-note" data-cinema-instruction>Scroll to look within.</span>
           <nav aria-label="Film chapters">{scenes.map((scene,index) => <a href={`#${scene.id}`} data-scene-link={index} aria-current={index === 0 ? 'step' : undefined}><span class="cinema-chapter-number">0{index+1}</span><span>{['Form','Depth','Resolution'][index]}</span></a>)}</nav>
@@ -45,7 +57,7 @@ const scenes = [
     <section class="cinema-perspective wrap" aria-labelledby="perspective-title"><p class="eyebrow">A change in perspective.</p><h2 id="perspective-title">The same watch.<br /><span>A little more revealed.</span></h2><div class="cinema-detail-grid"><article><ProductImage name="macro-case" alt="Close view of the polished case edge" sizes="(max-width: 700px) 100vw, 33vw" /><h3>Light defines the edge.</h3><p>A visual contrast between brushed surfaces and polished contours.</p></article><article><ProductImage name="macro-dial" alt="Close view of the graphite dial and faceted hands" sizes="(max-width: 700px) 100vw, 33vw" /><h3>Space gives it presence.</h3><p>A restrained face. Applied markers. Room for every element to register.</p></article><article><ProductImage name="macro-movement" alt="Illustrative wheels and bridges beneath the dial" sizes="(max-width: 700px) 100vw, 33vw" /><h3>Depth changes the view.</h3><p>An illustrative movement study, explored through its layers and geometry.</p></article></div></section>
     <section class="cinema-notes wrap" aria-label="Watch component notes"><details><summary>The layers, explained <span aria-hidden="true">+</span></summary><dl>{components.map(component => <div><dt>{component.name}</dt><dd>{component.description}</dd></div>)}</dl></details></section>
     <WatchProduct />
-    <section class="cinema-outro wrap"><p>A fictional design study by VELORNE.</p><button class="link-button" type="button" data-play-film hidden>Watch the assembly film <span aria-hidden="true">▶</span></button><a href="/templates/">Compare the designs <span aria-hidden="true">↗</span></a></section>
+    <section class="cinema-outro wrap"><p>A fictional design study by VELORNE.</p><button class="link-button" type="button" data-play-film hidden>Watch the assembly film <span aria-hidden="true">▶&#xFE0E;</span></button><a href="/templates/">Compare the designs <span aria-hidden="true">↗</span></a></section>
   </main>
   <WatchDialogs /><TemplateSwitcher current="cinematic" />
   <script>import '../scripts/home'; import '../scripts/cinematic';</script>

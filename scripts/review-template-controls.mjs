@@ -2,8 +2,8 @@ import { chromium } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import assert from 'node:assert/strict';
 import { writeFile } from 'node:fs/promises';
-const base = process.env.BASE_URL || 'http://127.0.0.1:4322';
-const browser = await chromium.launch({ channel:process.env.BROWSER_CHANNEL || 'chrome' });
+const base = process.env.BASE_URL || 'http://127.0.0.1:4321';
+const browser = await chromium.launch(process.env.BROWSER_CHANNEL ? { channel: process.env.BROWSER_CHANNEL } : {});
 const results = [];
 try {
   for (const width of [390,1440]) {

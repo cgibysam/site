@@ -2,8 +2,8 @@ import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 import { writeFile, mkdir } from 'node:fs/promises';
 import AxeBuilder from '@axe-core/playwright';
-const browser = await chromium.launch({ channel: process.env.BROWSER_CHANNEL || 'chrome' });
-const baseURL = process.env.BASE_URL || 'http://127.0.0.1:4322';
+const browser = await chromium.launch(process.env.BROWSER_CHANNEL ? { channel: process.env.BROWSER_CHANNEL } : {});
+const baseURL = process.env.BASE_URL || 'http://127.0.0.1:4321';
 const results = [];
 await mkdir('artifacts', { recursive: true });
 try {

@@ -11,7 +11,7 @@ for (const name of stills) {
 const frames = (await readdir(`${root}/sequence`)).filter((name) => /^\d{3}\.webp$/.test(name)).sort();
 if (frames.length !== 60) throw new Error(`Expected 60 frames, received ${frames.length}`);
 for (const name of frames) {
-  await sharp(`${root}/sequence/${name}`).resize(500, 500).webp({ quality: 83, alphaQuality: 95 }).toFile(`${root}/sequence-mobile/${name}`);
+  await sharp(`${root}/sequence/${name}`).resize(720, 720).webp({ quality: 80, alphaQuality: 95 }).toFile(`${root}/sequence-mobile/${name}`);
 }
 const files = [
   ...stills.flatMap((name) => [`${name}.webp`, `${name}-640.webp`]),

@@ -50,6 +50,12 @@ jobs:
       - name: Capture visual QA and browser errors
         run: pnpm capture
 
+      - name: Review cinematic template
+        run: node scripts/review-cinematic.mjs
+
+      - name: Review design templates
+        run: node scripts/review-templates.mjs
+
       - name: Upload QA evidence and generated lockfile
         uses: actions/upload-artifact@v4
         with:

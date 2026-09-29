@@ -1,5 +1,6 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { fitCanvas, frameSize, nearestFrame } from './frames';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,8 +27,8 @@ export async function initSequence(story: HTMLElement) {
       return;
     }
     const mobile = !desktop && story.dataset.mobileReady === 'true';
-    const size = mobile ? 500 : 800;
-    canvas.width = canvas.height = size;
+    const size = frameSize(mobile);
+    fitCanvas(canvas, size);
     const cache = new Map<number, ImageBitmap>();
     const loading = new Set<number>();
     const failed = new Set<number>();
@@ -43,13 +44,14 @@ export async function initSequence(story: HTMLElement) {
     const paint = () => {
       raf = 0;
       if (disposed || !near || document.hidden) return;
-      const bitmap = cache.get(target);
-      if (!bitmap || lastDrawn === target) return;
-      context.clearRect(0, 0, size, size);
-      context.drawImage(bitmap, 0, 0, size, size);
-      lastDrawn = target;
-      canvas.hidden = false;
-      canvas.dataset.frame = String(target);
+      // While the target is still loading, hold the closest decoded frame instead of freezing.
+      const hit = nearestFrame(cache, target);
+      if (!hit || lastDrawn === hit.frame) return;
+      if (canvas.hidden) { canvas.hidden = false; fitCanvas(canvas, size); }
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.drawImage(hit.bitmap, 0, 0, canvas.width, canvas.height);
+      lastDrawn = hit.frame;
+      canvas.dataset.frame = String(hit.frame);
       if (poster) poster.style.visibility = 'hidden';
     };
     const draw = () => { if (!raf) raf = requestAnimationFrame(paint); };
@@ -114,11 +116,14 @@ export async function initSequence(story: HTMLElement) {
     observer.observe(story);
     const visibility = () => { if (!document.hidden) update(); };
     document.addEventListener('visibilitychange', visibility);
+    const resize = () => { if (fitCanvas(canvas, size)) { lastDrawn = -1; draw(); } };
+    window.addEventListener('resize', resize);
     update();
     return () => {
       disposed = true; abort.abort(); observer.disconnect();
       cancelAnimationFrame(raf);
       document.removeEventListener('visibilitychange', visibility);
+      window.removeEventListener('resize', resize);
       cache.forEach((bitmap) => bitmap.close()); cache.clear();
       canvas.hidden = true;
       if (poster) poster.style.visibility = '';

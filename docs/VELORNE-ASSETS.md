@@ -18,8 +18,8 @@ All web images live in `public/media/velorne/`:
 - `macro-case.webp`, `macro-dial.webp`, `macro-movement.webp`: close observation.
 - `anatomy-overview.webp`: exploded portrait; default for reduced motion and unavailable animation.
 - `*-640.webp`: responsive still-image derivatives.
-- `sequence/000.webp` through `059.webp`: 800 × 800 rendered animation frames.
-- `sequence-mobile/000.webp` through `059.webp`: 500 × 500 mobile derivatives.
+- `sequence/000.webp` through `059.webp`: 1200 × 1200 rendered animation frames (sized for a ~820 CSS px canvas at DPR 2 without upscaling).
+- `sequence-mobile/000.webp` through `059.webp`: 720 × 720 mobile derivatives.
 
 Hero and three-quarter are the same shot intentionally reused. The client chooses responsive sizes and defers nonhero images. No browser requests missing files; the build-time manifest enables animation only when every frame exists.
 
@@ -27,9 +27,9 @@ Hero and three-quarter are the same shot intentionally reused. The client choose
 
 The sequence is rendered from actual 3D separation and camera choreography. It replaces the earlier cutout-layer prototype. Crystal, hands, indices, dial, movement, caseback and crown move relative to the case and bracelet. Scroll reverses the film naturally.
 
-The original three templates use GSAP to map native scroll to frame progress. Desktop pins the stage. Mobile uses a shorter native sticky image region. A maximum of ten decoded frames and two fetches in flight limits runtime memory. Frames render only near the section and while the document is visible. Reduced-motion and data-saving paths retain the static exploded portrait and semantic component notes.
+The original three templates use GSAP to map native scroll to frame progress. Desktop pins the stage. Mobile uses a shorter native sticky image region. A maximum of ten decoded frames and two fetches in flight limits runtime memory. Frames start only after window load and near the section, render only while the document is visible, and a not-yet-decoded frame shows the nearest decoded one instead of freezing. Reduced-motion and data-saving paths retain the static exploded portrait and semantic component notes.
 
-The Cinematic template uses a native requestAnimationFrame timeline with 95 ms damping, adjacent-frame blending, subtle camera drift and coordinated background/copy transitions. It retains up to 14 decoded images plus the compressed sequence, with mobile frames at 500 px. A build-time hash of the desktop sequence versions both sequence URLs, preventing stale force-cached animation frames after a render replacement.
+The Cinematic template uses a native requestAnimationFrame timeline with 95 ms damping, adjacent-frame blending, subtle camera drift and coordinated background/copy transitions. It retains up to 12 decoded images plus the compressed sequence, with mobile frames at 720 px. Frame loading starts after window load (the still hero stays the LCP image) and warms the compressed sequence coarse to fine (ends, then every 16th, 8th, 4th, 2nd frame, then the rest); a frame that is not decoded yet shows the nearest decoded one. On the Cinematic template an inline script chooses the film layout before first paint (same conditions as `src/scripts/cinematic.ts`); chapters follow scroll immediately with each scene's still in the canvas position, and the canvas replaces the stills once frames decode, so enhancing causes no layout shift. If the film script never runs, the page returns to the static chapters on `load`; a missing frame also restores them. Both engines size the canvas backing store to its displayed size × devicePixelRatio (capped at 2) and never above the frame size; shared helpers live in `src/scripts/frames.ts`. A build-time hash of the desktop sequence versions both sequence URLs, preventing stale force-cached animation frames after a render replacement.
 
 ## Reproduction
 
@@ -39,7 +39,7 @@ From the repository root, with local tools installed:
 source .tools/env.sh
 "$BLENDER_BIN" -b -t 4 --python scripts/render/watch.py -- --mode proof --size 800 --samples 96 --output artifacts/render-proof
 "$BLENDER_BIN" -b -t 4 --python scripts/render/watch.py -- --mode stills --size 1400 --samples 48
-"$BLENDER_BIN" -b -t 4 --python scripts/render/watch.py -- --mode sequence --size 800 --samples 32
+"$BLENDER_BIN" -b -t 4 --python scripts/render/watch.py -- --mode sequence --size 1200 --samples 32
 node scripts/optimize-media.mjs
 pnpm build
 ```

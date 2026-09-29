@@ -26,7 +26,9 @@
 .cinema[data-enhanced] .cinema-scenes { position:absolute; inset:0; }
 .cinema[data-enhanced] .cinema-scene { --scene-ink:inherit; --scene-muted:inherit; position:absolute; inset:0; min-height:0; background:transparent; opacity:0; visibility:hidden; pointer-events:none;  }
 .cinema[data-enhanced] .cinema-scene[data-active] { opacity:1; visibility:visible; pointer-events:auto; }
-.cinema[data-enhanced] .cinema-still { visibility:hidden; }
+.cinema[data-enhanced] .cinema-still { height:auto; aspect-ratio:1; }
+/* Each scene's still holds the canvas position until the rendered film is ready. */
+.cinema[data-film] .cinema-still { visibility:hidden; }
 .cinema[data-enhanced] .cinema-copy { transform:translateY(-5px); }
 .cinema-controls { position:absolute; left:7%; right:7%; bottom:91px; z-index:5; color:var(--scene-ink); }
 .cinema-controls>nav { display:flex; justify-content:flex-end; gap:12px; }
@@ -40,8 +42,12 @@
 .cinema-perspective { padding-block:115px 60px; }
 .cinema-perspective>.eyebrow { color:#4a5961; font-size:15px; margin-bottom:25px; }
 .cinema-perspective>h2 { font-size:clamp(42px,5vw,72px); }
-.cinema-detail-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:28px; margin-top:65px; }
-.cinema-detail-grid .product-image { aspect-ratio:4/5; background:#192026; border-radius:3px; }
+.cinema-detail-grid { display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:48px 40px; align-items:start; margin-top:65px; }
+.cinema-detail-grid .product-image { aspect-ratio:4/3; background:#192026; border-radius:3px; }
+/* One lead study beside two supporting ones, rather than three equal cards. */
+.cinema-detail-grid article:first-child { grid-row:span 2; }
+.cinema-detail-grid article:first-child .product-image { aspect-ratio:4/5; }
+.cinema-detail-grid article:first-child h3 { font-size:32px; }
 .cinema-detail-grid img { object-fit:cover; }
 .cinema-detail-grid h3 { font-size:24px; margin-top:24px; line-height:1.15; }
 .cinema-detail-grid p { font-size:15px; line-height:1.6; color:#58646b; margin-top:13px; }
@@ -75,13 +81,17 @@
   .cinema-still { height:390px; }
   .cinema[data-enhanced] .cinema-copy { padding-top:102px; transform:none; }
   .cinema[data-enhanced] .cinema-discover { display:none; }
-  .cinema[data-enhanced] .cinema-canvas { width:min(100%,43svh,calc(100svh - 440px)); right:50%; transform:translateX(50%); bottom:156px; }
+  .cinema[data-enhanced] .cinema-canvas,.cinema[data-enhanced] .cinema-still { width:min(100%,43svh,calc(100svh - 440px)); right:50%; transform:translateX(50%); bottom:156px; }
+  .cinema[data-enhanced] .cinema-still { height:auto; }
   .cinema-controls { left:20px; right:20px; bottom:82px; }
   .cinema-controls>nav { gap:7px; }
   .cinema-controls nav a { gap:6px; padding-inline:12px; font-size:11px; }
   .cinema-progress { margin-top:14px; }
   .cinema[data-enhanced] { height:300svh; }
   .cinema-detail-grid { grid-template-columns:1fr; gap:45px; margin-top:40px; }
+  .cinema-detail-grid article:first-child { grid-row:auto; }
+  .cinema-detail-grid article:first-child h3 { font-size:24px; }
+  .cinema-detail-grid .product-image,.cinema-detail-grid article:first-child .product-image { aspect-ratio:4/5; }
   .cinema-perspective { padding-block:75px 45px; }
   .cinema-perspective>h2 { font-size:39px; }
   .cinema-notes dl { grid-template-columns:1fr 1fr; gap:22px; }
@@ -92,5 +102,5 @@
   .cinema[data-enhanced] .cinema-copy { padding-top:95px; }
   .cinema[data-enhanced] .cinema-copy h1,.cinema[data-enhanced] .cinema-copy h2 { font-size:36px; }
   .cinema[data-enhanced] .cinema-description { font-size:13px; }
-  .cinema[data-enhanced] .cinema-canvas { width:min(100%,calc(100svh - 400px)); }
+  .cinema[data-enhanced] .cinema-canvas,.cinema[data-enhanced] .cinema-still { width:min(100%,calc(100svh - 400px)); }
 }

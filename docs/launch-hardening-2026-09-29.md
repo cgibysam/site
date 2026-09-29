@@ -226,3 +226,36 @@ they default to port 4322 while CI previews on 4321. That's why they failed unti
 5. Lighthouse 95+ (recipe §6) has not been measured. Only local LCP/CLS lab runs exist
    (`docs/VELORNE-QA.md:20`, `docs/VELORNE-POLISH-QA.md:49`). Run it, plus a real iPhone check of the `▶` glyph
    and scrub smoothness.
+
+---
+
+## Outcome — fixes applied on `fix/launch-hardening-2026-09-29` (2026-09-29)
+
+Approved scope: every ❌ that can be fixed without an approved origin, plus the hero items. The Astro major upgrade was
+not approved, so it is recorded as an exception instead.
+
+| Item | Change | Evidence |
+| --- | --- | --- |
+| ❌1 stray sandbox files | Both `assembly-film.mp4.sb-*` files removed from git; `*.sb-*` added to `.gitignore` | `ls dist/media/velorne \| grep -c sb-` → 0 |
+| ❌2 dependency audit | Exception recorded in `README.md` ("Dependency audit exception"), with scope and a re-check trigger | README |
+| ❌3 / hero 1 soft on retina | Sequence re-rendered at 1200 px (`watch.py --size 1200 --samples 32`, ~45 min locally); mobile derived at 720 px; canvas backing store = displayed size × min(DPR, 2), capped at frame size (`src/scripts/frames.ts` `fitCanvas`) | All 60 frames match the published poses (worst mean abs diff 2.25/255, frame 26). Probe: DPR 1 → 820 px backing, DPR 2 → 1200, 390 px at DPR 3 → 720 |
+| ❌4 / hero 2–3 loading | Frames start only after `load` on both pages. The cinematic warm pass loads coarse to fine (0, 59, then every 16th, 8th, 4th, 2nd frame, then the rest). An undecoded target shows the nearest decoded frame | Resource Timing: 0 frame requests before `loadEventStart` on `/cinematic/` and `/#anatomy`, desktop and 390 px. Throttled jump to the end showed frames 1 → 59 instead of freezing |
+| New regression found and fixed | Waiting for `load` moved the film-layout switch after first paint (CLS 0.089 at 390 px). An inline script now picks the film layout before paint, and stills stand in until frames decode | Throttled trace: 0 layout-shift entries at 390 and 1440 px. `performance.mjs` on `/cinematic/`: CLS 0 |
+| ❌7 / hero 7 film poster | Poster set when the dialog opens, using the versioned frame URL | Not requested with JS off / reduced motion |
+| ❌8 three identical cards | `/cinematic` "A change in perspective" is now one lead study beside two supporting ones; single column ≤ 600 px | Screenshots at 1440/768/390, no horizontal overflow |
+| (e7) `▶` glyph | `U+FE0E` text presentation added (`index`, `cinematic`, `nocturne`, `ambient.ts`) | iPhone check still ❓ |
+| CI gap | `review-cinematic.mjs` and `review-templates.mjs` run in CI. All review scripts default to port 4321 and use Playwright Chromium unless `BROWSER_CHANNEL` is set | Workflow diff |
+
+Media weight after the change: desktop sequence 3.78 MB (was 2.15 MB; recipe budget ≤ 6 MB), mobile 1.81 MB
+(was 1.18 MB). Both load after `load`, so first load is unchanged. Throttled mobile lab run (390×844, DPR 2, 4× CPU,
+1.6 Mbps, 150 ms): `/` LCP 856 ms, CLS 0, 497,255 bytes; `/cinematic/` LCP 948 ms, CLS 0, 242,851 bytes before
+the post-load frames. These are local lab numbers, not field data.
+
+Verification on the final build: `pnpm check` 0 errors / 0 warnings. `pnpm build` passes. `pnpm capture`,
+`review-cinematic`, `review-templates`, `review-watch` and `review-template-controls` all exit 0, with runtime
+errors `[]` and 0 axe violations across 28 scans (16 cinematic, 9 templates, 3 home). Cinematic scrub cadence
+p95 is 16.7–16.8 ms.
+
+Still open: og:image / twitter:card / canonical / sitemap (need an origin), error logging and analytics
+(decision), privacy notice (question), mobile sequence vs poster (decision), the two separate scrub engines
+(shared helpers now in `frames.ts`, engines not merged), Lighthouse and real-device checks.
