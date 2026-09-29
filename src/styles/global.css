@@ -23,7 +23,7 @@ h2>span { color:#75757b; }
 .skip-link { position:fixed; z-index:100; top:14px; left:14px; padding:15px; background:white; transform:translateY(-160%); }
 .skip-link:focus { transform:none; }
 .button { display:inline-flex; align-items:center; justify-content:center; border:0; min-height:46px; padding:12px 23px; background:#0071e3; border-radius:30px; color:#fff; font-size:16px; line-height:1.3; white-space:nowrap; transition:background .2s; }
-.button:hover,.nav__cta:hover { background:#0077ed; }
+.button:hover,.nav__cta:hover { background:#0066cc; }
 .link-button { display:inline-flex; align-items:center; justify-content:center; gap:9px; min-height:46px; padding:0; color:var(--blue); font-size:17px; background:none; border:0; }
 .link-button:hover { text-decoration:underline; text-underline-offset:4px; }
 .play-icon { width:19px; height:19px; border:1.5px solid currentColor; border-radius:50%; font-size:9px; display:inline-grid; place-items:center; padding-left:1px; }
