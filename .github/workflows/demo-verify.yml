@@ -1,9 +1,6 @@
 name: Demo Website Verify
 
-on:
-  pull_request:
-    branches: [main]
-  workflow_dispatch:
+on: { pull_request: { branches: [main] }, push: { branches: [demo/agency-os-v1] }, workflow_dispatch: {} }
 
 permissions:
   contents: read
