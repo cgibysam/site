@@ -1,0 +1,11 @@
+---
+import { asset } from '../data/watch';
+interface Props { name: string; alt: string; eager?: boolean; sizes?: string; }
+const { name, alt, eager = false, sizes = '(max-width: 700px) 100vw, 55vw' } = Astro.props;
+const src = asset(name);
+const small = asset(`${name}-640`);
+---
+<div class:list={['product-image', { 'product-image--unavailable': !src }]}>
+  {src ? <img src={src} srcset={small ? `${small} 640w, ${src} 1400w` : undefined} sizes={small ? sizes : undefined} alt={alt} width="1400" height="1400" loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : 'auto'} decoding="async" /> :
+    <div class="image-fallback"><span class="image-fallback__mark" aria-hidden="true">V</span><p>Study 01</p><span>Product imagery forthcoming</span></div>}
+</div>

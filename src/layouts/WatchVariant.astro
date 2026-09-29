@@ -1,0 +1,27 @@
+---
+import WatchDialogs from '../components/WatchDialogs.astro';
+import TemplateSwitcher from '../components/TemplateSwitcher.astro';
+import '../styles/global.css';
+import '../styles/templates.css';
+interface Props { design: 'atelier' | 'nocturne'; title: string; description: string; }
+const { design, title, description } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title><meta name="description" content={description} />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="theme-color" content={design === 'atelier' ? '#f6f0dd' : '#0c0e10'} />
+    <meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body class:list={['template', `template--${design}`]}>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <slot name="header" />
+    <main id="main"><slot /></main>
+    <slot name="footer" />
+    <WatchDialogs /><TemplateSwitcher current={design} />
+    <script>import '../scripts/home'; import '../scripts/ambient';</script>
+  </body>
+</html>

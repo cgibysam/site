@@ -1,0 +1,37 @@
+---
+interface Props { current: 'studio' | 'atelier' | 'nocturne' | 'cinematic'; }
+const { current } = Astro.props;
+const designs = [
+  { id: 'studio', name: '01 — Studio', href: '/', description: 'Clear. Product-led.' },
+  { id: 'atelier', name: '02 — Atelier', href: '/atelier/', description: 'Warm. Expressive.' },
+  { id: 'nocturne', name: '03 — Nocturne', href: '/nocturne/', description: 'Dark. Immersive.' },
+  { id: 'cinematic', name: '04 — Cinematic', href: '/cinematic/', description: 'Three scenes. One scroll.' },
+];
+---
+<details class="design-picker">
+  <summary><span class="design-picker__dots" aria-hidden="true"><i></i><i></i><i></i></span>Change design <span aria-hidden="true">+</span></summary>
+  <nav aria-label="Website design previews"><p>VELORNE / Design studies</p>{designs.map(design => <a href={design.href} aria-current={current === design.id ? 'page' : undefined}><strong>{design.name}</strong><small>{design.description}</small></a>)}<a class="design-picker__all" href="/templates/">Compare all designs <span aria-hidden="true">↗</span></a></nav>
+</details>
+<style>
+.design-picker { position:fixed; bottom:18px; left:18px; z-index:50; color:#202023; font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif; font-size:12px; font-weight:400; letter-spacing:normal; line-height:1.5; }
+.design-picker>summary { min-height:44px; padding:10px 15px; display:flex; gap:12px; border:1px solid #d6d6dc; border-radius:30px; background:#fff; box-shadow:0 4px 20px #0002; font-size:12px; }
+.design-picker>summary>span:last-child { font-size:19px; }
+.design-picker__dots { display:flex; gap:3px; }
+.design-picker__dots i { width:9px; height:9px; background:#e8e8ed; border:1px solid #aaa; border-radius:50%; }
+.design-picker__dots i:nth-child(2) { background:#e0582f; border-color:#e0582f; }
+.design-picker__dots i:nth-child(3) { background:#171e26; border-color:#171e26; }
+.design-picker nav { position:absolute; left:0; bottom:56px; width:255px; padding:17px; border:1px solid #d6d6dc; border-radius:20px; background:white; box-shadow:0 10px 45px #0003; }
+.design-picker nav>p { font-size:11px; color:#666; margin-bottom:10px; }
+.design-picker nav a { display:block; padding:12px; border-radius:9px; color:#202023; min-height:44px; }
+.design-picker nav a:hover { background:#f3f3f6; }
+.design-picker nav a[aria-current] { background:#e9edf4; }
+.design-picker strong { font-size:13px; font-weight:600; display:block; }
+.design-picker small { font-size:11px; color:#62626a; }
+.design-picker .design-picker__all { display:flex; justify-content:space-between; border-top:1px solid #ddd; border-radius:0; margin-top:8px; padding-bottom:0; font-size:12px; }
+@media(max-width:700px) { .design-picker { left:12px; bottom:12px; } }
+</style>
+<script>
+const picker = document.querySelector<HTMLDetailsElement>('.design-picker');
+picker?.addEventListener('keydown', event => { if (event.key === 'Escape') { picker.open = false; picker.querySelector('summary')?.focus(); } });
+document.addEventListener('click', event => { if (picker?.open && event.target instanceof Node && !picker.contains(event.target)) picker.open = false; });
+</script>

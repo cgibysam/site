@@ -1,0 +1,21 @@
+---
+import WatchVariant from '../layouts/WatchVariant.astro';
+import WatchAnatomy from '../components/WatchAnatomy.astro';
+import WatchProduct from '../components/WatchProduct.astro';
+import ProductImage from '../components/ProductImage.astro';
+---
+<WatchVariant design="nocturne" title="VELORNE Nocturne — There is more beneath." description="An immersive exploration of VELORNE Study 01. A fictional mechanical watch concept, revealed in a silent product film and scroll-controlled assembly.">
+  <header class="nocturne-header" slot="header"><a class="wordmark" href="#top" aria-label="VELORNE home">VELORNE</a><nav aria-label="Primary"><a href="#materials">Surface</a><a href="#anatomy">Depth</a><a href="#details">Study 01 <span aria-hidden="true">↗</span></a></nav></header>
+  <section class="nocturne-hero" id="top" aria-labelledby="nocturne-title">
+    <div class="nocturne-film"><ProductImage name="hero" alt="VELORNE Study 01 suspended in a dark studio" eager /><video data-ambient muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"><source data-src="/media/velorne/assembly-film.mp4" type="video/mp4" /></video></div>
+    <div class="nocturne-hero__copy"><p class="nocturne-kicker"><span aria-hidden="true"></span>Study 01 / Obsidian</p><h1 id="nocturne-title">There is<br />more<br /><em>beneath.</em></h1><a class="nocturne-enter" href="#anatomy"><span>Enter the watch</span><span aria-hidden="true">↗</span></a></div>
+    <div class="nocturne-hero__side" aria-hidden="true">FORM. SEPARATION. RESOLUTION.</div>
+    <div class="nocturne-hero__bottom"><p>A study in mechanical form.<br />An invitation to look beyond the face.</p><button type="button" data-ambient-toggle hidden aria-label="Play background animation">Play motion <span aria-hidden="true">▶</span></button><a href="#materials">SCROLL TO DISCOVER <span aria-hidden="true">↓</span></a></div>
+  </section>
+  <section class="nocturne-manifesto" id="study"><p class="nocturne-kicker">01 / The surface is a beginning.</p><h2>Light reveals the form.<br /><span>Motion reveals the idea.</span></h2><p>Study 01 is a fictional watch concept, explored as an object of depth and contrast. A complete form — and all the layers you don't see.</p></section>
+  <section class="nocturne-macro" id="materials" aria-labelledby="nocturne-macro-title"><div><ProductImage name="macro-dial" alt="Macro view of the graphite dial, sword-shaped hands and applied markers" /></div><div class="nocturne-macro__copy"><p class="nocturne-kicker">02 / Close observation</p><h2 id="nocturne-macro-title">A different<br />kind of<br /><em>presence.</em></h2><p>Graphite in shadow.<br />Polished edges in light.<br />The space in between.</p></div></section>
+  <WatchAnatomy />
+  <WatchProduct />
+  <section class="nocturne-ending"><p class="nocturne-kicker">VELORNE / STUDY 01</p><h2>Keep<br /><em>looking.</em></h2><button type="button" class="nocturne-enter" data-play-film hidden><span>Watch the full film</span><span aria-hidden="true">↗</span></button></section>
+  <footer class="nocturne-footer" slot="footer"><a class="wordmark" href="#top">VELORNE</a><p>A fictional concept by CGI by Sam.<br />A visual study. Not available for purchase.</p><a href="/templates/">Explore other perspectives ↗</a></footer>
+</WatchVariant>

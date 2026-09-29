@@ -1,61 +1,53 @@
-# CGI by Sam — Agency OS V1 Website Demo
+# VELORNE — Agency OS website demo
 
-This branch is a **fictional website test**, not the production CGI by Sam website.
+A fictional mechanical watch concept, Study 01. Approved direction: Obsidian Atelier with an ivory product-detail chapter. Replaces the former burger concept.
 
-## Purpose
+## Experience
 
-Test the Agency OS V1 candidate against a real build:
-- visual quality;
-- cinematic scroll interaction;
-- responsive recomposition;
-- reduced-motion behavior;
-- accessibility;
-- performance-aware motion;
-- semantic/search structure;
-- cross-AI project routing;
-- verification workflow.
+- Original Blender-authored watch, consistent across studio portraits, gallery and macro views.
+- Scroll-controlled 3D separation film with crystal, hands, indices, dial, movement, case, crown, caseback and bracelet.
+- Desktop stage pinning, mobile sticky composition, reduced-motion stills and semantic component notes.
+- Product-view gallery and full-size image inspection using a native accessible dialog.
+- Static Astro content; no checkout, account, tracking or backend.
 
-## Concept
+Finishes and internal architecture are fictional visual proposals, not manufacturing or performance claims. No prices, certifications, heritage, reviews or availability claims are invented.
 
-**STACK** is a fictional burger house used purely as a creative/technical benchmark.
+## Run locally
 
-The hero and scroll story use generated CSS/SVG-like shapes rather than external image dependencies so the first test isolates layout, typography, motion and engineering.
+Tools are isolated in the ignored `.tools` directory. From the repository root:
 
-## Stack
-
-- Astro
-- TypeScript
-- GSAP + ScrollTrigger
-- native CSS design tokens/layout
-
-No smooth-scroll library or 3D engine is included in V1 because the concept does not need them yet.
-
-## Local
-
-```bash
-pnpm install
-pnpm check
-pnpm dev
+```sh
+source .tools/env.sh
+pnpm dev --host 127.0.0.1
 ```
 
-Production-like verification:
+Installed tools: Node.js 22.23.3, pnpm 10.17.1, Blender 4.5.14 LTS (Intel-compatible). Official binary downloads were SHA256-verified. The dependency lockfile is checked in as source and CI uses frozen resolution.
 
-```bash
+On another machine, install Node 22 and pnpm 10.17.1, then use `pnpm install --frozen-lockfile`. `.tools/env.sh` is local convenience, not required by the app or CI.
+
+## Verification
+
+```sh
+source .tools/env.sh
 pnpm check
 pnpm build
-pnpm preview
+pnpm preview --host 127.0.0.1 --port 4321
+# Second terminal, using the installed Chrome browser:
+source .tools/env.sh
+BROWSER_CHANNEL=chrome pnpm capture
+BROWSER_CHANNEL=chrome node scripts/performance.mjs
 ```
 
-## Safety
+CI uses Playwright Chromium. Browser checks cover responsive widths, motion, reduced motion, keyboard controls, product gallery/dialog, no JavaScript, automated accessibility scans and runtime errors. See [QA evidence and limits](docs/VELORNE-QA.md) for actual results; do not infer a pass from the existence of a test script.
 
-The demo ships with:
-- `noindex,nofollow`
-- `robots.txt` disallowing crawling
-- no production deployment configuration
-- no real business claims
+## Asset source
 
-Do not remove those protections or merge to `main` without explicit approval.
+[Asset pipeline](docs/VELORNE-ASSETS.md) · [Model source](assets/source/README.md)
 
-## Agency OS
+The editable `.blend` and reproducible Python scene script are included. `scripts/optimize-media.mjs` generates responsive WebP derivatives. The frame cache keeps at most ten decoded images and two requests in flight; offscreen and background rendering pauses.
 
-Read `AGENTS.md`. The current demo points to `cgibysam/agency-os` branch `chore/cross-ai-foundation` while V1 is still a candidate.
+## Protection
+
+`noindex,nofollow` and `robots.txt` disallow remain. No fake canonical or commercial structured data is emitted. Canonical/social URLs need a real authorized origin. No deployment or merge authorization is implied.
+
+Read `AGENTS.md` for the Agency OS baseline. The old `QA-REPORT-2026-09-25.md` describes the superseded burger implementation, not this watch demo.

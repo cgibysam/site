@@ -1,99 +1,88 @@
 import { chromium } from 'playwright';
 import { mkdir, writeFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import AxeBuilder from '@axe-core/playwright';
 
 await mkdir('artifacts', { recursive: true });
-
-const browser = await chromium.launch();
-const runtimeErrors = [];
-
-async function attachDiagnostics(page, label) {
-  page.on('pageerror', (error) => runtimeErrors.push({ label, type: 'pageerror', message: error.message }));
-  page.on('console', (message) => {
-    if (message.type() === 'error') {
-      runtimeErrors.push({ label, type: 'console', message: message.text() });
+const browser = await chromium.launch(process.env.BROWSER_CHANNEL ? { channel: process.env.BROWSER_CHANNEL } : {});
+const errors = [];
+const results = [];
+const baseURL = process.env.BASE_URL || 'http://127.0.0.1:4321';
+try {
+  for (const width of [390, 768, 1440]) {
+    for (const reducedMotion of ['reduce', 'no-preference']) {
+      const label = `${width}-${reducedMotion}`;
+      const context = await browser.newContext({ viewport: { width, height: 900 }, reducedMotion });
+      const page = await context.newPage();
+      page.on('pageerror', (error) => errors.push({ label, message: error.message }));
+      page.on('console', (message) => { if (message.type() === 'error') errors.push({ label, message: message.text() }); });
+      page.on('response', (response) => { if (response.status() >= 400) errors.push({ label, message: `${response.status()} ${response.url()}` }); });
+      await page.goto(baseURL, { waitUntil: 'networkidle' });
+      assert.equal(await page.locator('h1').count(), 1);
+      assert.equal(await page.locator('main').count(), 1);
+      assert.match(await page.title(), /VELORNE/);
+      assert.match(await page.locator('meta[name="robots"]').getAttribute('content'), /noindex/);
+      const brokenAnchors = await page.locator('a[href^="#"]').evaluateAll((links) => links.map((link) => link.getAttribute('href')).filter((href) => !document.getElementById(href.slice(1))));
+      assert.deepEqual(brokenAnchors, []);
+      await page.keyboard.press('Tab');
+      assert.equal(await page.locator('.skip-link').evaluate((el) => el === document.activeElement), true);
+      await page.keyboard.press('Tab');
+      assert.equal(await page.locator('.site-header .wordmark').evaluate((el) => el === document.activeElement), true);
+      await page.screenshot({ path: `artifacts/${label}-hero.png` });
+      if (width === 390) {
+        await page.locator('.mobile-nav summary').click();
+        assert.equal(await page.locator('.mobile-nav__panel').isVisible(), true);
+        await page.keyboard.press('Escape');
+        assert.equal(await page.locator('.mobile-nav').getAttribute('open'), null);
+      }
+      await page.locator('[data-view-button="rear"]').click();
+      assert.equal(await page.locator('[data-view="rear"]').isVisible(), true);
+      assert.equal(await page.locator('[data-view-button="rear"]').getAttribute('aria-pressed'), 'true');
+      if (await page.locator('[data-zoom]').isVisible()) {
+        await page.locator('[data-zoom]').click();
+        assert.equal(await page.locator('[data-lightbox]').isVisible(), true);
+        await page.keyboard.press('Escape');
+        assert.equal(await page.locator('[data-lightbox]').isVisible(), false);
+        assert.equal(await page.locator('[data-zoom]').evaluate((el) => el === document.activeElement), true);
+      }
+      await page.screenshot({ path: `artifacts/${label}-product.png` });
+      await page.locator('.component-notes summary').click();
+      assert.equal(await page.locator('.component-notes dt').count(), 9);
+      assert.equal(await page.locator('.component-notes dl').isVisible(), true);
+      await page.locator('.component-notes summary').click();
+      const ready = await page.locator('[data-anatomy]').getAttribute('data-ready');
+      if (ready === 'true') {
+        const top = await page.locator('#anatomy').evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
+        for (const offset of [0, 800, 1600]) {
+          await page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' }), top + offset);
+          await page.waitForTimeout(600);
+          await page.screenshot({ path: `artifacts/${label}-anatomy-${offset}.png` });
+        }
+      }
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
+      assert.equal(overflow, false, `${label}: horizontal overflow`);
+      if (reducedMotion === 'reduce') {
+        assert.equal(await page.locator('.pin-spacer').count(), 0);
+        const accessibility = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze();
+        await writeFile(`artifacts/${label}-accessibility.json`, JSON.stringify(accessibility, null, 2));
+        assert.deepEqual(accessibility.violations.map(({ id, nodes }) => ({ id, count: nodes.length })), [], `${label}: accessibility violations`);
+        await page.screenshot({ path: `artifacts/${label}-full.png`, fullPage: true });
+      }
+      results.push({ label, anatomyAssetsPresent: ready === 'true' });
+      await context.close();
     }
-  });
-}
-
-async function openPage({ width, height, reducedMotion = false, label }) {
-  const page = await browser.newPage({
-    viewport: { width, height },
-    deviceScaleFactor: 1
-  });
-  await attachDiagnostics(page, label);
-  if (reducedMotion) {
-    await page.emulateMedia({ reducedMotion: 'reduce' });
   }
-  await page.goto('http://127.0.0.1:4321', { waitUntil: 'networkidle' });
-  return page;
+  const noJsContext = await browser.newContext({ javaScriptEnabled: false });
+  const page = await noJsContext.newPage();
+  await page.goto(baseURL);
+  assert.equal(await page.locator('h1').isVisible(), true);
+  await page.locator('.component-notes summary').click();
+  assert.equal(await page.locator('.component-notes dl').isVisible(), true);
+  assert.equal(await page.locator('[data-gallery-controls]').isVisible(), false);
+  await noJsContext.close();
+} finally {
+  await writeFile('artifacts/runtime-errors.json', JSON.stringify(errors, null, 2));
+  await writeFile('artifacts/verification.json', JSON.stringify(results, null, 2));
+  await browser.close();
 }
-
-// Static/full-page captures are taken with reduced motion so pinned/reveal
-// animations do not create misleading blank regions in a fullPage screenshot.
-{
-  const page = await openPage({ width: 1440, height: 1000, reducedMotion: true, label: 'desktop-static' });
-  await page.screenshot({ path: 'artifacts/desktop-static.png', fullPage: true });
-  await page.close();
-}
-
-{
-  const page = await openPage({ width: 390, height: 844, reducedMotion: true, label: 'mobile-static' });
-  await page.screenshot({ path: 'artifacts/mobile-static.png', fullPage: true });
-
-  const menu = page.locator('.mobile-nav');
-  if (!(await menu.isVisible())) {
-    throw new Error('Mobile navigation control is not visible at 390px.');
-  }
-  await page.locator('.mobile-nav summary').click();
-  if (!(await page.locator('.mobile-nav__panel').isVisible())) {
-    throw new Error('Mobile navigation panel did not open.');
-  }
-  await page.screenshot({ path: 'artifacts/mobile-menu-open.png', fullPage: false });
-
-  const overflow = await page.evaluate(() => ({
-    scrollWidth: document.documentElement.scrollWidth,
-    clientWidth: document.documentElement.clientWidth
-  }));
-  if (overflow.scrollWidth > overflow.clientWidth + 1) {
-    throw new Error(`Unexpected mobile horizontal overflow: ${overflow.scrollWidth}px > ${overflow.clientWidth}px`);
-  }
-
-  await page.close();
-}
-
-// Default-motion captures test important animation states as viewport shots.
-{
-  const page = await openPage({ width: 1440, height: 1000, label: 'desktop-motion' });
-  await page.screenshot({ path: 'artifacts/desktop-hero-motion.png', fullPage: false });
-
-  const structure = await page.evaluate(() => ({
-    h1Count: document.querySelectorAll('h1').length,
-    mainCount: document.querySelectorAll('main').length,
-    navCount: document.querySelectorAll('nav').length,
-    title: document.title,
-    robots: document.querySelector('meta[name="robots"]')?.getAttribute('content') ?? ''
-  }));
-  if (structure.h1Count !== 1) throw new Error(`Expected exactly one h1, found ${structure.h1Count}`);
-  if (structure.mainCount !== 1) throw new Error(`Expected exactly one main landmark, found ${structure.mainCount}`);
-  if (!structure.title) throw new Error('Document title is empty.');
-  if (!structure.robots.includes('noindex')) throw new Error('Demo noindex protection is missing.');
-
-  const storyTop = await page.locator('#story').evaluate((element) => element.offsetTop);
-  await page.evaluate((y) => window.scrollTo({ top: y + 1100, behavior: 'instant' }), storyTop);
-  await page.waitForTimeout(900);
-  await page.screenshot({ path: 'artifacts/desktop-story-mid.png', fullPage: false });
-
-  await page.evaluate((y) => window.scrollTo({ top: y + 2200, behavior: 'instant' }), storyTop);
-  await page.waitForTimeout(700);
-  await page.screenshot({ path: 'artifacts/desktop-story-late.png', fullPage: false });
-  await page.close();
-}
-
-await writeFile('artifacts/runtime-errors.json', JSON.stringify(runtimeErrors, null, 2));
-
-await browser.close();
-
-if (runtimeErrors.length) {
-  console.error('Browser runtime errors detected:', runtimeErrors);
-  process.exit(1);
-}
+assert.deepEqual(errors, [], 'Browser errors detected');

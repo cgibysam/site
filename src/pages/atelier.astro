@@ -1,0 +1,20 @@
+---
+import WatchVariant from '../layouts/WatchVariant.astro';
+import WatchAnatomy from '../components/WatchAnatomy.astro';
+import WatchProduct from '../components/WatchProduct.astro';
+import ProductImage from '../components/ProductImage.astro';
+---
+<WatchVariant design="atelier" title="VELORNE Atelier — Time, with a point of view." description="A warm, editorial exploration of VELORNE Study 01. A fictional watch concept, seen through form, light and mechanical detail.">
+  <header class="atelier-header" slot="header"><a href="#top" class="atelier-mark" aria-label="VELORNE home">V<span>VELORNE<br />THE DESIGN ATELIER</span></a><nav aria-label="Primary"><a href="#study">The idea</a><a href="#anatomy">The inside</a><a href="#details" class="atelier-nav-cta">Meet Study 01 <span aria-hidden="true">↗</span></a></nav></header>
+  <section class="atelier-hero" id="top" aria-labelledby="atelier-title">
+    <div class="atelier-hero__copy"><p class="atelier-kicker">An independent point of view / Study 01</p><h1 id="atelier-title">Time, with<br />a <em>point</em><br />of view.</h1><div class="atelier-hero__bottom"><span class="atelier-star" aria-hidden="true">✳</span><p>For the pleasure<br />of looking closer.</p><a href="#study" aria-label="Discover the idea"><span aria-hidden="true">↘</span></a></div></div>
+    <figure class="atelier-portrait"><div class="atelier-portrait__arch"><span class="atelier-portrait__number" aria-hidden="true">01</span><ProductImage name="front" alt="Study 01 graphite watch face against a warm terracotta backdrop" eager /></div><figcaption><span>VELORNE / OBSIDIAN</span><span>A FICTIONAL DESIGN STUDY</span></figcaption></figure>
+  </section>
+  <section class="atelier-statement" id="study" aria-labelledby="atelier-statement-title"><p class="atelier-kicker">A little less ordinary.</p><h2 id="atelier-statement-title">Some objects tell the time.<br />Others make you<br /><em>lose track of it.</em></h2><div><span class="atelier-statement__index">(01—03)</span><p>Study 01 began with a simple thought: a watch can be as interesting to look into as it is to look at. A quiet dial. An expressive edge. An entire world just beneath the surface.</p></div></section>
+  <section class="atelier-observation" id="materials" aria-labelledby="atelier-observation-title"><div class="atelier-observation__image"><ProductImage name="macro-case" alt="A close study of the watch's polished case edge and crown" /></div><div class="atelier-observation__copy"><p class="atelier-kicker">Notes on looking / 01</p><h2 id="atelier-observation-title">Good things<br />happen at<br /><em>the edges.</em></h2><p>A line of light. A change in texture. The small contrasts that give an object its character.</p><a href="#anatomy">See what lies beneath <span aria-hidden="true">↗</span></a></div></section>
+  <div class="atelier-divider" aria-hidden="true"><span>FORM</span><span>✳</span><span>FEELING</span><span>✳</span><span>TIME</span></div>
+  <WatchAnatomy />
+  <WatchProduct />
+  <section class="atelier-ending"><p class="atelier-kicker">VELORNE / A study, not a conclusion.</p><h2>Look <em>again.</em></h2><button type="button" class="atelier-film" data-play-film hidden>Watch the assembly film <span aria-hidden="true">↗</span></button></section>
+  <footer class="atelier-footer" slot="footer"><a href="#top">VELORNE</a><p>Fictional watch concept by CGI by Sam.<br />No commercial offer or product specifications are implied.</p><a href="/templates/">More perspectives ↗</a></footer>
+</WatchVariant>

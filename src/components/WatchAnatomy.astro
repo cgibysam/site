@@ -1,0 +1,18 @@
+---
+import ProductImage from './ProductImage.astro';
+import { anatomyReady, mobileSequenceReady, components, sequenceVersion } from '../data/watch';
+---
+      <section id="anatomy" class="anatomy" data-anatomy data-media-version={sequenceVersion} data-ready={String(anatomyReady)} data-mobile-ready={String(mobileSequenceReady)} aria-labelledby="anatomy-title">
+        <div class="anatomy__stage" data-stage>
+          <div class="anatomy__header wrap"><p class="eyebrow">Inside Study 01</p><a class="small-link" href="#details">Skip to the watch <span aria-hidden="true">↓</span></a></div>
+          <div class="anatomy__layout wrap">
+            <div class="anatomy__copy"><h2 id="anatomy-title">Beautiful outside.<br /><span>Fascinating within.</span></h2><p class="body-copy">The face is only the beginning. Explore the layers that bring the whole watch together.</p><p class="anatomy__chapter" aria-hidden="true" data-chapter>01 / The complete form</p><p class="anatomy__instruction" data-instruction>Explore the assembly and component notes below.</p></div>
+            <div class="anatomy__visual"><div class="sequence" data-sequence>
+              <ProductImage name="anatomy-overview" alt="Illustrative exploded Study 01 assembly: crystal, hands, indices, dial, movement, case, crown, caseback and bracelet" />
+              {anatomyReady && <canvas width="800" height="800" data-sequence-canvas aria-hidden="true" hidden></canvas>}
+            </div></div>
+          </div>
+          <div class="anatomy__footer wrap"><div class="anatomy__progress" aria-hidden="true"><span data-sequence-progress></span></div><span>One watch. A new perspective.</span><span>Illustrative assembly</span></div>
+        </div>
+      </section>
+      <section class="component-notes" aria-label="Watch component notes"><div class="wrap"><details><summary>The anatomy, explained <span aria-hidden="true">+</span></summary><dl>{components.map(({ name, description }) => <div><dt>{name}</dt><dd>{description}</dd></div>)}</dl></details></div></section>

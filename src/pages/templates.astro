@@ -1,0 +1,59 @@
+---
+import '../styles/global.css';
+const designs = [
+ { name:'Studio', number:'01', href:'/', image:'studio', tone:'studio', tag:'Clarity, by design.', description:'A bright, product-first experience. Centered typography, clean detail cards and a watch you can explore from every angle.', features:['Light & minimal','Product-focused','Quiet motion'] },
+ { name:'Atelier', number:'02', href:'/atelier/', image:'atelier', tone:'atelier', tag:'A little less ordinary.', description:'An expressive editorial world. Warm paper tones, terracotta, generous serif typography and a sculptural product portrait.', features:['Warm & editorial','Expressive type','Art-directed layouts'] },
+ { name:'Nocturne', number:'03', href:'/nocturne/', image:'nocturne', tone:'nocturne', tag:'There is more beneath.', description:'A film-led experience in shadow and light. A moving watch assembly, immersive macro imagery and a darker sense of depth.', features:['Dark & cinematic','Background film','Immersive scroll'] },
+ { name:'Cinematic', number:'04', href:'/cinematic/', image:'cinematic', tone:'cinematic', tag:'Time, in another light.', description:'One continuous scroll journey: a clean product reveal, a dark mechanical breakdown and a cool blue resolution. Jump between chapters or explore at your own pace.', features:['Three scenes','Continuous scroll','Chapter navigation'] },
+];
+---
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>VELORNE — Four design perspectives</title><meta name="description" content="Compare four VELORNE watch website templates: Studio, Atelier, Nocturne and Cinematic." /><meta name="robots" content="noindex,nofollow" /><link rel="icon" href="/favicon.svg" type="image/svg+xml" /></head>
+<body class="design-board">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="board-header"><a href="/" class="wordmark">VELORNE</a><span>DESIGN STUDIES / 01—04</span><a href="/">Back to the watch ↗</a></header>
+  <main id="main">
+    <div class="board-intro"><p>One watch. Four distinct worlds.</p><h1>Choose a<br /><em>point of view.</em></h1><p>Different compositions. Different personalities.<br />The same attention to what matters.</p></div>
+    <div class="design-grid">{designs.map(design => <article class:list={['design-card', `design-card--${design.tone}`]}>
+      <a class="design-card__preview" href={design.href} aria-label={`Preview the ${design.name} template`}><img src={`/media/templates/${design.image}.jpg`} alt={`${design.name} website preview`} width="1200" height="900" /><span>Explore this design <span aria-hidden="true">↗</span></span></a>
+      <div class="design-card__name"><h2>{design.name}</h2><span>{design.number}</span></div><h3>{design.tag}</h3><p>{design.description}</p><ul>{design.features.map(feature => <li>{feature}</li>)}</ul><a class="design-card__open" href={design.href}>Open {design.name} <span aria-hidden="true">↗</span></a>
+    </article>)}</div>
+    <div class="board-note"><span>BUILT TO COMPARE</span><p>Each is a working page with responsive layouts, an interactive watch assembly and a product gallery. Use “Change design” on any page to switch perspectives.</p></div>
+  </main>
+  <footer class="board-footer"><span>A fictional concept by CGI by Sam.</span><span>Local design previews. Not a commercial offer.</span></footer>
+</body>
+</html>
+<style>
+.design-board { background:#eeede8; color:#232421; }
+.board-header { display:flex; align-items:center; justify-content:space-between; gap:20px; margin-inline:4%; padding-block:26px; border-bottom:1px solid #c8c7bf; }
+.board-header>span { font-size:10px; letter-spacing:.12em; }
+.board-header>a:last-child { min-height:44px; display:flex; align-items:center; font-size:12px; }
+.board-intro { padding:80px 5% 70px; text-align:center; }
+.board-intro>p:first-child { font-size:15px; margin-bottom:25px; }
+.board-intro h1 { font-size:clamp(65px,7.4vw,110px); letter-spacing:-.06em; line-height:.93; font-weight:500; }
+.board-intro h1 em { font-family:Didot,'Times New Roman',serif; font-weight:400; color:#565b4b; }
+.board-intro>p:last-child { font-size:16px; color:#65665d; margin-top:30px; line-height:1.7; }
+.design-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px; padding:0 4% 80px; }
+.design-card__preview { display:block; padding:15px; background:#d5d8e0; border-radius:18px; overflow:hidden; }
+.design-card--atelier .design-card__preview { background:#e46137; }
+.design-card--nocturne .design-card__preview { background:#adc3d4; }
+.design-card--cinematic .design-card__preview { background:#bfd1dc; }
+.design-card__preview img { width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; object-position:top; border-radius:5px; transition:transform .4s; background:#fff; }
+.design-card__preview:hover img { transform:scale(1.015); }
+.design-card__preview>span { display:flex; justify-content:space-between; align-items:center; min-height:40px; padding-top:12px; color:#191b1c; font-size:11px; }
+.design-card__name { display:flex; align-items:center; justify-content:space-between; margin-top:26px; }
+.design-card h2 { font-size:36px; font-weight:500; }
+.design-card__name>span { font-family:Didot,'Times New Roman',serif; font-size:28px; color:#636657; }
+.design-card h3 { font-size:16px; margin-top:21px; letter-spacing:-.02em; }
+.design-card>p { font-size:14px; line-height:1.75; color:#5a5d54; margin-top:13px; }
+.design-card ul { list-style:none; padding:0; display:flex; gap:7px; flex-wrap:wrap; margin:23px 0; }
+.design-card li { border:1px solid #b7b9ac; padding:6px 9px; border-radius:20px; color:#525648; font-size:10px; }
+.design-card__open { display:flex; justify-content:space-between; align-items:center; min-height:48px; font-size:13px; border-bottom:1px solid #acb0a2; }
+.board-note { border-top:1px solid #c8c7bf; margin:0 4%; padding:40px 0; display:flex; gap:60px; justify-content:space-between; }
+.board-note>span { font-size:10px; letter-spacing:.1em; flex-shrink:0; }
+.board-note p { max-width:600px; font-size:15px; color:#5a5d54; }
+.board-footer { padding:30px 4%; background:#e2e2d9; display:flex; justify-content:space-between; gap:25px; font-size:11px; color:#565a4c; }
+@media(max-width:900px) { .design-grid { gap:18px; } .design-card__preview { padding:10px; } .design-card h2 { font-size:29px; } }
+@media(max-width:700px) { .board-header { margin-inline:20px; padding-block:14px; } .board-header>span { display:none; } .board-header>a:last-child { font-size:11px; } .board-intro { padding:65px 20px; } .board-intro h1 { font-size:65px; } .board-intro>p:last-child { font-size:15px; } .design-grid { grid-template-columns:1fr; padding-inline:20px; gap:55px; } .design-card__preview { padding:16px; } .design-card h2 { font-size:35px; } .board-note { margin-inline:20px; flex-direction:column; gap:20px; } .board-footer { padding:25px 20px; flex-direction:column; gap:10px; } }
+</style>

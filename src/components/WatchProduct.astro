@@ -1,0 +1,11 @@
+---
+import ProductImage from './ProductImage.astro';
+import { views } from '../data/watch';
+---
+      <section id="details" class="product section-space" aria-labelledby="product-title">
+        <div class="section-heading wrap"><h2 id="product-title">Find your perspective.</h2><p>Study 01. Obsidian.</p></div>
+        <div class="wrap product__layout">
+          <div class="gallery" data-gallery>{views.map(({ id, alt }, index) => <div data-view={id} hidden={index !== 0}><ProductImage name={id} alt={alt} /></div>)}<div class="gallery__controls" role="group" aria-label="Product views" hidden data-gallery-controls>{views.map(({ id, label }, index) => <button type="button" data-view-button={id} aria-pressed={index === 0}>{label}</button>)}</div><button class="gallery__zoom" type="button" data-zoom hidden>Take a closer look <span aria-hidden="true">↗</span></button><p class="gallery__caption" aria-live="polite" data-gallery-caption>01 / Three-quarter view</p></div>
+          <div class="product__copy"><p class="eyebrow">The first VELORNE concept</p><h3>Study 01.</h3><p class="product__subtitle">A study in quiet contrasts.</p><p class="body-copy">Graphite and light. Brushed and polished. A considered composition, whichever way you look at it.</p><div class="finish"><span class="finish__swatch" aria-hidden="true"></span><div><strong>Obsidian</strong><span>Proposed graphite and brushed-metal palette</span></div></div><a class="button" href="#anatomy">Explore from the inside</a><div class="product__accordions"><details><summary>Design intention <span aria-hidden="true">+</span></summary><p>A graphite dial, faceted hands, articulated bracelet and controlled reflections. Study 01 investigates the relationship between an object's appearance and its construction.</p></details><details><summary>About this concept <span aria-hidden="true">+</span></summary><p>VELORNE is a fictional brand created for the CGI by Sam Agency OS website demo. Rendered finishes are visual proposals. No heritage, manufacturing origin, dimensions, certifications or performance specifications are claimed.</p></details></div><p class="product__disclosure">Fictional design study. Not available for purchase.</p></div>
+        </div>
+      </section>
